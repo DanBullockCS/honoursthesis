@@ -8,6 +8,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/7796f0cca1.js"></script>
 </head>
 <body>
@@ -16,7 +17,7 @@
     <img src="images/CCv3.png" alt="Classroom Companion Logo" height="100px" width="250px">
   </div>
   <!-- Navbar -->
-  <div class="container">
+  <div>
     <nav class="navbar navbar-expand-lg navbar-dark static-top" style="background-color: #0077CA;">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -48,9 +49,50 @@
   </div>
 
   <!-- Page Content -->
-  <div>
+  <div class="container">
     <h1>Soon&trade;</h1>
-  </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createClass">
+      Create A Class!
+    </button>
+
+    <!-- Modal to create class -->
+    <div class="modal fade" id="createClass" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Create a new class</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+              <h6>Class name: <input type="text" name="classname" class="form-control"><br></h6>
+              <h6>Enter your class list:</h6>
+              <ul class="list-group" id="studentList">
+                <li class="list-group-item" contentEditable=true></li>
+              </ul>
+              <br>
+              <button type="button" id="addStudent" class="btn btn-success">Add Student&nbsp<i class="fa fa-plus" aria-hidden="true"></i></button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+
+<!-- JS for student list in Class Creation Modal -->
+<script>
+// Add a student li to the ul
+$(document).ready(function() {
+  $("#addStudent").click(function() {
+    $("#studentList").append("<li class=\"list-group-item\" contentEditable=true></li>");
+  });
+});
+</script>
 
 </body>
 </html>
