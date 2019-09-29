@@ -13,11 +13,11 @@ head
 header.sticky-top
   nav.navbar.navbar-expand-sm.navbar-dark.sticky-top(style='background-color: #222222;')
     // Logo
-    a.navbar-brand(href='#')
+    a.navbar-brand(href='/')
       img(src='/images/CCv3.png' alt='Classroom Companion Logo' width='200px')
     ul.nav.navbar-nav.ml-auto
       li.nav-item.active
-        a.nav-link(href='#')
+        a.nav-link(href='/')
           | Home
           span.sr-only (current)
       li.nav-item
@@ -40,7 +40,7 @@ header.sticky-top
       if (username && username !== '')
         li.nav-item
           a.nav-link(href="/logout") Logout
-      else
+      else if(!username && username == '')
         li.nav-item
           a.nav-link(href="/login") Login
         li.nav-item

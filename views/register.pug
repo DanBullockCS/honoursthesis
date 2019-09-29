@@ -4,30 +4,26 @@ block content
 
    div(class='errorMessage')= errorMessage
 
-   form(action='/processRegistration',
-      method='post',
-      class='form')
+   .container.col-md-4.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+     form(action='/processRegistration', method='post')
+       div.form-group
+        label(for='username') Username:
+        input.form-control(type='text',
+              id='username',
+              name='username')
 
-      label(class='label row1', for='username') Username:
-      input(type='text',
-            id='username',
-            name='username',
-            placeholder='Username',
-            class='control row1')
+        label(for='email') Email:
+        input.form-control(type='text',
+              id='email',
+              name='email')
 
-      label(class='label row2', for='pwd') Password:
-      input(type='password',
-            id='pwd',
-            name='pwd',
-            placeholder='Password',
-            class='control row2')
-
-      label(class='label row3', for='email') E-Mail:
-      input(type='text',
-            id='email',
-            name='email',
-            placeholder='E-Mail Address',
-            class='control row3')
-
-      button(type='submit',
-             class='control row4') Sign Up
+        label(for='pwd') Password:
+        input.form-control(type='password',
+              id='pwd',
+              name='pwd')
+        label(for='pwd') Confirm Password:
+        input.form-control(type='password',
+              id='pwd',
+              name='pwd')
+        br
+        button.btn.btn-primary(type='submit') Sign Up

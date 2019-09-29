@@ -84,7 +84,7 @@ app.get('/', function(request, response) {
 app.get('/login', function(request, response) {
    response.render('login', {
       title: 'Login Page',
-      errorMessage: 'Error cannot login'
+      errorMessage: ''
    });
 });
 
