@@ -1,0 +1,51 @@
+doctype html
+// Thesis Project Fall/Winter 2019/2020
+// Author: Daniel Bullock
+head
+  meta(charset='utf-8' name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous')
+  script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+  script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous')
+  script(src='https://kit.fontawesome.com/7796f0cca1.js')
+// Navbar
+header.sticky-top
+  nav.navbar.navbar-expand-sm.navbar-dark.sticky-top(style='background-color: #222222;')
+    // Logo
+    a.navbar-brand(href='#')
+      img(src='/images/CCv3.png' alt='Classroom Companion Logo' width='200px')
+    ul.nav.navbar-nav.ml-auto
+      li.nav-item.active
+        a.nav-link(href='#')
+          | Home
+          span.sr-only (current)
+      li.nav-item
+        a.nav-link(href='#') Whiteboard
+      li.nav-item
+        a.nav-link(href='#') Group Maker
+      li.nav-item.dropdown
+        a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+          | Tracker Widgets
+        .dropdown-menu
+          a.dropdown-item(href='#') Material Planner
+          a.dropdown-item(href='#') Attendance
+          a.dropdown-item(href='#') Student Performance
+      li.nav-item.dropdown
+        a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+          | Feedback Widgets
+        .dropdown-menu
+          a.dropdown-item(href='#') Feedback Mailer
+          a.dropdown-item(href='#') Anonymous Feedback
+      if (username && username !== '')
+        li.nav-item
+          a.nav-link(href="/logout") Logout
+      else
+        li.nav-item
+          a.nav-link(href="/login") Login
+        li.nav-item
+          a.nav-link(href="/register") Register
+block content
+// Page Content
+.container
+  h1 ClassroomCompanion&trade;

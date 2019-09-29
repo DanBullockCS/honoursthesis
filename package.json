@@ -1,0 +1,29 @@
+{
+  "name": "honoursthesis",
+  "version": "1.0.0",
+  "description": "HonoursThesis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanBullockCS/honoursthesis.git"
+  },
+  "author": "Daniel Bullock",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanBullockCS/honoursthesis/issues"
+  },
+  "homepage": "https://github.com/DanBullockCS/honoursthesis#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "bcrypt-nodejs": "0.0.3",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "mongodb": "^3.3.2",
+    "mongoose": "^5.7.1",
+    "pug": "^2.0.4",
+    "uuid": "^3.3.3"
+  }
+}
