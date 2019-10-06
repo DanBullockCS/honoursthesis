@@ -1,0 +1,11 @@
+/* General CSS class */
+
+h1.pagetitle {
+  text-align: center;
+  width: 50%;
+  margin: auto;
+}
+
+div.stage {
+  background-color: #F5F5F5;
+}

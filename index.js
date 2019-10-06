@@ -149,7 +149,7 @@ app.post('/processRegistration', function(request, response) {
    newUser.save(function(error) {
       if (error) {
          response.render('register',
-                         {errorMessage: 'Invalid registration data'});
+            {errorMessage: 'Invalid registration data'});
       } else {
          request.session.username = username; // Logged in
          response.render('registerConfirm', {
@@ -157,6 +157,12 @@ app.post('/processRegistration', function(request, response) {
             title: 'Welcome to ClassroomCompanion!'
          });
       }
+   });
+});
+
+app.get('/groupMaker', function(request, response) {
+   response.render('groupMaker', {
+      title: 'Group Maker'
    });
 });
 

@@ -1,0 +1,32 @@
+extends main
+
+block content
+  append head 
+     script(language='JavaScript' type='text/javascript' src='/scripts/groupmaker.js')
+     br
+     div(class='errorMessage')= errorMessage
+     h1.pagetitle= title
+     br
+     .container
+       // Group Display
+       div.stage.shadow
+         table.table(id="group-table")
+           tr
+             th Group 1:
+             td Daniel
+             td Kevin
+             
+       // Settings
+       h2(style="text-align: center") Group Settings:
+       label(for="group-size") Max Group Size:
+       input.form-control.number-input(type="number", id="group-size", name="group-num" min="1" value="1")
+       label(for="student-list") Student Names (Enter each on their own line):
+       // Textarea with prefilled names
+       textarea.form-control(id="student-list", rows="5",style="overflow-y:scroll;") Kyle&#13;&#10;Edward&#13;&#10;Vince&#13;&#10;Ingrid&#13;&#10;Nancy
+       br
+       a.btn.btn-info.text-white.mr-1(aria-label="Left Align" id="reshuffle-btn" onclick="reshuffle();") Reshuffle Group 
+        i.fa.fa-random(aria-hidden="true")
+       a.btn.btn-info.text-white(aria-label="Left Align" id="clear-btn" onclick="clearList();") Clear List 
+        i.fa.fa-eraser(aria-hidden="true")
+       
+       p Note to self: Add functionality to let user add students from database, excel sheet

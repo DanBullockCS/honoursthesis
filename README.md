@@ -1,5 +1,5 @@
 # Fall 2019 - Winter 2020 Undergraduate Thesis Project
-**Title:** ClassroomCompanion
+**Title:** ClassroomCompanion\
 **Desc:** A website built to assist teachers with mundane teaching tasks.
 
 ## Planned Widgets:

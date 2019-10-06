@@ -1,11 +1,11 @@
 extends main
 block content
-   h1= title
-
+   br
    div(class='errorMessage')= errorMessage
 
    .container.col-md-4.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
-     form(action='/processRegistration', method='post')
+     h4 Create your account
+     form(name="register_form" action="/processRegistration", method="post")
        div.form-group
         label(for='username') Username:
         input.form-control(type='text',
@@ -15,15 +15,18 @@ block content
         label(for='email') Email:
         input.form-control(type='text',
               id='email',
-              name='email')
-
+              name='email'
+              onfocusout='validateEmail(document.register_form.email)')
+        p(id="email_format" style="text-align: right; color: red;") 
         label(for='pwd') Password:
         input.form-control(type='password',
               id='pwd',
-              name='pwd')
-        label(for='pwd') Confirm Password:
+              name='pwd'
+              onkeyup='check();')
+        label(for='confirm_pwd') Confirm Password:
         input.form-control(type='password',
-              id='pwd',
-              name='pwd')
-        br
-        button.btn.btn-primary(type='submit') Sign Up
+              id='confirm_pwd',
+              name='confirm_pwd'
+              onkeyup='check();')
+        p(id="pwd_match" style="text-align: right; color: red;")  
+        button.btn.btn-primary(id='register_btn' type='submit') Register
