@@ -6,6 +6,26 @@ h1.pagetitle {
   margin: auto;
 }
 
+/* Group maker stage */
 div.stage {
   background-color: #F5F5F5;
+}
+
+/* Navbar animations */
+a.nav-link:hover:after {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+a.nav-link:after {
+  -webkit-transition: -webkit-transform .2s ease-in-out;
+         transition:         transform .2s ease-in-out;
+}
+li.nav-item:hover {
+  background: #003C71;
+  border-radius: 5%;
+}
+li.nav-item {
+  background: #222222;
+  -webkit-transition: -webkit-background .2s ease-in-out;
+         transition:         background .2s ease-in-out;
 }

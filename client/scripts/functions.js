@@ -19,6 +19,22 @@ function validateEmail(input) {
     document.getElementById('email_format').innerText = "";
   } else {
     document.register_form.email.classList.add("is-invalid");
-    document.getElementById('email_format').innerText = "Inproper email format\n(e.g. Leonard@ClassroomCompanion.ca)";
+    document.getElementById('email_format').innerText = "Inproper email format, please double check your email";
   }
+}
+
+// Check that the username doesn't exist in the Database
+// THIS IS TODO: NEED TO FIGURE OUT HOW TO DO THIS
+function validateUsername(input) {
+  let usernames = [];
+  for (let i = 0; i < usernames.length; i++) {
+     if (usernames[i] === input.value) {
+        document.register_form.username.classList.add("is-invalid");
+        document.getElementById('username_valid').innerText = "Username already exists";
+        return true;
+     }
+  }
+  document.register_form.username.classList.remove("is-invalid");
+  document.getElementById('username_valid').innerText = "";
+  return false;
 }

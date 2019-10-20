@@ -10,8 +10,9 @@ block content
         label(for='username') Username:
         input.form-control(type='text',
               id='username',
-              name='username')
-
+              name='username',
+              onfocusout='validateUsername(document.register_form.username)')
+        p(id="username_valid" style="text-align: right; color: red;") 
         label(for='email') Email:
         input.form-control(type='text',
               id='email',

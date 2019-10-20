@@ -22,6 +22,13 @@ function reshuffle() {
   var studentArr = document.getElementById("student-list").value.split("\n");
   var groupSize = document.getElementById("group-size").value;
 
+  // Delete any unintended newline or whitespace entrys
+  for (let i = 0; i < studentArr.length; i++) {
+    if (!studentArr[i].trim()) {
+      studentArr.splice(i);
+    }
+  }
+
   // Shuffle around the student array randomly
   studentArr.sort(function() { return 0.5 - Math.random() });
 
@@ -49,8 +56,6 @@ function reshuffle() {
       }
     }
   }
-
-  // Add group members into table
 }
 
 // Empty list of students

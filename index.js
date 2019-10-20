@@ -13,6 +13,7 @@ app.use(express.static(__dirname + '/client'));
 // Database config
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost:27017/classroomcompanion', {
+      useUnifiedTopology: true,
       useNewUrlParser: true
    },
    function(error) {
@@ -44,18 +45,6 @@ app.use(session({
    secret: 'apollo slackware prepositional expectations'
 }));
 
-// Utility functions
-let usernames = [];
-
-function userExists(toFind) {
-   for (i = 0; i < usernames.length; i++) {
-      if (usernames[i] === toFind) {
-         return true;
-      }
-   }
-   return false;
-}
-
 // Database Schemas
 let Schema = mongoose.Schema;
 let userSchema = new Schema({
@@ -65,7 +54,8 @@ let userSchema = new Schema({
       index: true
    },
    email: String,
-   hashedPassword: String
+   hashedPassword: String,
+   classes: [[]]
 }, {
    collection: 'users'
 });
@@ -160,9 +150,21 @@ app.post('/processRegistration', function(request, response) {
    });
 });
 
+app.get('/account', function(request, response) {
+   response.render('account', {
+      title: 'Your Account'
+   });
+});
+
 app.get('/groupMaker', function(request, response) {
    response.render('groupMaker', {
       title: 'Group Maker'
+   });
+});
+
+app.get('/attendance', function(request, response) {
+   response.render('attendance', {
+      title: 'Attendance Tracker'
    });
 });
 

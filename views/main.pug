@@ -19,30 +19,37 @@ header.sticky-top
     a.navbar-brand(href='/')
       img(src='/images/CCv3.png' alt='Classroom Companion Logo' width='200px')
     ul.nav.navbar-nav.ml-auto
-      li.nav-item
-        a.nav-link(href='/')
-          | Home
-      li.nav-item
-        a.nav-link(href='#') Whiteboard
-      li.nav-item
-        a.nav-link(href='/groupMaker') Group Maker
-      li.nav-item.dropdown
-        a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
-          | Tracker Widgets
-        .dropdown-menu
-          a.dropdown-item(href='#') Material Planner
-          a.dropdown-item(href='#') Attendance
-          a.dropdown-item(href='#') Student Performance
-      li.nav-item.dropdown
-        a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
-          | Feedback Widgets
-        .dropdown-menu
-          a.dropdown-item(href='#') Feedback Mailer
-          a.dropdown-item(href='#') Anonymous Feedback
       if (username && username !== '')
+        li.nav-item
+          a.nav-link(href='/')
+            | Home
+        li.nav-item
+          a.nav-link(href='/account') Account
+        li.nav-item
+          a.nav-link(href='#') Whiteboard
+        li.nav-item
+          a.nav-link(href='/groupMaker') Group Maker
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+            | Tracker Widgets
+          .dropdown-menu
+            a.dropdown-item(href='#') Material Planner
+            a.dropdown-item(href='/attendance') Attendance
+            a.dropdown-item(href='#') Student Performance
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+            | Feedback Widgets
+          .dropdown-menu
+            a.dropdown-item(href='#') Feedback Mailer
+            a.dropdown-item(href='#') Anonymous Feedback
         li.nav-item
           a.nav-link(href="/logout") Logout
       else
+        li.nav-item
+          a.nav-link(href='/')
+            | Home
+        li.nav-item
+          a.nav-link(href="/about") About
         li.nav-item
           a.nav-link(href="/login") Login
         li.nav-item
