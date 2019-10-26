@@ -55,7 +55,7 @@ let userSchema = new Schema({
    },
    email: String,
    hashedPassword: String,
-   classes: [[]]
+   classes: {className: String, studentList: [String]}
 }, {
    collection: 'users'
 });
@@ -150,10 +150,28 @@ app.post('/processRegistration', function(request, response) {
    });
 });
 
+
 app.get('/account', function(request, response) {
-   response.render('account', {
-      title: 'Your Account'
-   });
+  User.find({username: username}).then(function(results) {
+    username = results[0].username;
+    email = results[0].email;
+
+    response.render('account', {
+      title: 'Your Account',
+      username: username,
+      email: email,
+    });
+  });
+});
+
+// Adding a class to the teachers (user) database
+app.post('/createClass', function(request, response) {
+  class_name = request.body.enter_class_name;
+  student_list = request.body.enter_student_names;
+
+  User.update(
+    {username: username},
+    { $set: { email: 'dan@dan.com'}});
 });
 
 app.get('/groupMaker', function(request, response) {

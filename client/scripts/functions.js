@@ -24,7 +24,6 @@ function validateEmail(input) {
 }
 
 // Check that the username doesn't exist in the Database
-// THIS IS TODO: NEED TO FIGURE OUT HOW TO DO THIS
 function validateUsername(input) {
   let usernames = [];
   for (let i = 0; i < usernames.length; i++) {
@@ -38,3 +37,16 @@ function validateUsername(input) {
   document.getElementById('username_valid').innerText = "";
   return false;
 }
+
+// Hiding and showing pastebox or upload file input (Account settings page)
+$(function() {
+  $('#paste-or-excel').change(function(){
+    if($('#excel-input').css('display') == 'none') {
+      $('#paste-input').hide();
+      $('#excel-input').show();
+    } else {
+      $('#excel-input').hide();
+      $('#paste-input').show();
+    }
+  });
+});

@@ -5,8 +5,52 @@ block content
   div(class='errorMessage')= errorMessage
   h1.pagetitle= title
   br
-  .container.col-md-4.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
-    h4 Username: #{username}
-    h4 Email: #{email}
-    h4 Your Classes: [Put dropdown list here]
-    
+  .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+    h4 Teacher Information:
+    p <b>Username:</b> #{username}
+    p <b>Email:</b> #{email}
+    hr
+    label(for="users-classes") Your Classes:
+    select(class="form-control" id="users-classes")
+      option Put classes here
+    br
+    label(for="student-names-display") Student List:
+    ul.list-group(id="student-names-display")
+      li.list-group-item Student names will show up here
+    br
+  .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+    h4 Create a new class:
+    form(name='create_class_form', action='/createClass', method='post')
+      div.form-group
+        label(for="enter_class_name") Enter a <b>distinctive</b> name for your class:
+        input.form-control(type='text',name='enter_class_name',id="enter_class_name")
+      div.form-group
+        label(for="paste-or-excel") Enter your student's names as:
+        select(class="form-control" id="paste-or-excel")
+          option Paste/type list (Seperated by a new line for each student)
+          option Excel spreadsheet (.xlsx)
+      div.form-group(id="paste-input")
+        label(for="enter_student_names") Paste all the names of the students in the class:
+        small.form-text.text-muted Make sure to paste each student's name on a new line
+        textarea.form-control(name="enter_student_names", id="enter_student_names",rows="5",style="overflow-y:scroll;")
+      div.form-group(id="excel-input", style='display: none;')
+        input.form-control-file(type="file", id="upload_spreadsheet", accept=".xls,.xlsx")
+        label(for="upload_spreadsheet") Upload a .xlsx spreadsheet with all your student names on a new line 
+      button.btn.btn-primary.text-white(type='submit') Create this class
+      a.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="general-help" data-toggle="modal" data-target="#help-modal") Uploading students as spreadsheet (.xlsx) 
+        i.fa.fa-question-circle(aria-hidden="true")
+          
+  // Help modal for .xlsx
+  .modal.fade(tabindex='-1' role='dialog' id="help-modal")
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title What do I put in my uploaded .xlsx file?
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+        .modal-body
+          p You may upload any .xlsx sheet that contains the students in your class where each students name is on a new line (like the figure shown below). 
+          p Make sure the spreadsheet does not have any headings, or you will have a student in your class named those heads (i.e. FirstName LastName).
+          img.img-fluid(src='/images/CreateClassHelp.png' alt='Uploading a Spreadsheet Instructions' style="max-height:250px;")
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Close

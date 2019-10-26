@@ -17,42 +17,42 @@ header.sticky-top
   nav.navbar.navbar-expand-sm.navbar-dark.sticky-top(style='background-color: #222222;')
     // Logo
     a.navbar-brand(href='/')
-      img(src='/images/CCv3.png' alt='Classroom Companion Logo' width='200px')
+      img(src='/images/CCv3.png' alt='Classroom Companion Logo' width='200px' title="Classroom Companion Home Page")
     ul.nav.navbar-nav.ml-auto
       if (username && username !== '')
         li.nav-item
-          a.nav-link(href='/')
+          a.nav-link(href='/' title="Home")
             | Home
         li.nav-item
-          a.nav-link(href='/account') Account
+          a.nav-link(href='/account' title="Account") Account
         li.nav-item
-          a.nav-link(href='#') Whiteboard
+          a.nav-link(href='#' title="Whiteboard") Whiteboard
         li.nav-item
-          a.nav-link(href='/groupMaker') Group Maker
+          a.nav-link(href='/groupMaker' title="Group Maker") Group Maker
         li.nav-item.dropdown
-          a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+          a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Tracker Widgets")
             | Tracker Widgets
           .dropdown-menu
-            a.dropdown-item(href='#') Material Planner
-            a.dropdown-item(href='/attendance') Attendance
-            a.dropdown-item(href='#') Student Performance
+            a.dropdown-item(href='#' title="Material Planner") Material Planner
+            a.dropdown-item(href='/attendance' title="Attendance") Attendance
+            a.dropdown-item(href='#' title="Student Performance") Student Performance
         li.nav-item.dropdown
-          a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+          a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Feedback Widgets")
             | Feedback Widgets
           .dropdown-menu
-            a.dropdown-item(href='#') Feedback Mailer
-            a.dropdown-item(href='#') Anonymous Feedback
+            a.dropdown-item(href='#' title="Feedback Mailer") Feedback Mailer
+            a.dropdown-item(href='#' title="Anonymous Feedback") Anonymous Feedback
         li.nav-item
-          a.nav-link(href="/logout") Logout
+          a.nav-link(href="/logout" title="Logout") Logout
       else
         li.nav-item
-          a.nav-link(href='/')
+          a.nav-link(href='/' title="Home")
             | Home
         li.nav-item
-          a.nav-link(href="/about") About
+          a.nav-link(href="/about" title="About") About
         li.nav-item
-          a.nav-link(href="/login") Login
+          a.nav-link(href="/login" title="Login") Login
         li.nav-item
-          a.nav-link(href="/register") Register        
+          a.nav-link(href="/register" title="Register") Register        
 block content
 // Page Content

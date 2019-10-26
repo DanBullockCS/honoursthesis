@@ -29,3 +29,8 @@ li.nav-item {
   -webkit-transition: -webkit-background .2s ease-in-out;
          transition:         background .2s ease-in-out;
 }
+
+/* Make sure user cannot select break tags */
+br {
+  user-select: none;
+}

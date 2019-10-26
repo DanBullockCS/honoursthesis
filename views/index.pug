@@ -2,7 +2,8 @@ extends main
 block content
   br
   h1.pagetitle= title
-  if (!username || (username === ''))
-    p You are not logged in
-  else
-    p You are logged in as #{username}.
+  .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+    if (!username || (username === ''))
+      p You are not logged in
+    else
+      p You are logged in as #{username}.
