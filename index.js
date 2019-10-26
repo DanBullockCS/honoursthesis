@@ -55,7 +55,7 @@ let userSchema = new Schema({
    },
    email: String,
    hashedPassword: String,
-   classes: {className: String, studentList: [String]}
+   classes: {}
 }, {
    collection: 'users'
 });
@@ -169,9 +169,33 @@ app.post('/createClass', function(request, response) {
   class_name = request.body.enter_class_name;
   student_list = request.body.enter_student_names;
 
-  User.update(
+  var entireStudentList = [];
+  var entireClassList = [];
+
+  User.find({username: username}).then(function(results) {
+    entireStudentList = results[0].classes.studentList;
+    entireClassList = results[0].classes.className;
+  });
+
+  entireClassList.push(class_name);
+  entireStudentList.push(student_list);
+
+  User.updateOne(
     {username: username},
-    { $set: { email: 'dan@dan.com'}});
+    {$set: {"classes.className": entireClassList, "classes.studentList": entireStudentList}},
+    {multi: false},
+    function(error) {
+      if ((error)) {
+        console.log("user not updated");
+      } else {
+        console.log("user updated");
+        response.render('account', {
+          title: 'Your Account',
+          username: username,
+          email: email,
+        });
+      }
+    });
 });
 
 app.get('/groupMaker', function(request, response) {
