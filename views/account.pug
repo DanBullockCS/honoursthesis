@@ -2,7 +2,8 @@ extends main
 
 block content
   br
-  div(class='errorMessage')= errorMessage
+  if (errorMessage)
+    div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')= errorMessage
   h1.pagetitle= title
   br
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
@@ -10,16 +11,9 @@ block content
     p <b>Username:</b> #{username}
     p <b>Email:</b> #{email}
     hr
-    label(for="users-classes") Your Classes:
-    select(class="form-control" id="users-classes")
-      option Put classes here
-    br
-    label(for="student-names-display") Student List:
-    ul.list-group(id="student-names-display")
-      li.list-group-item Student names will show up here
-    br
+    a.btn.btn-primary(href='/mycourses') View/Edit Classes
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
-    h4 Create a new class:
+    h4(id="CreateClass") Create a new class:
     form(name='create_class_form', action='/createClass', method='post')
       div.form-group
         label(for="enter_class_name") Enter a <b>distinctive</b> name for your class:

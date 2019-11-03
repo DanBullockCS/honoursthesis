@@ -1,7 +1,8 @@
 extends main
 block content
    br
-   div(class="error")= errorMessage
+   if (errorMessage)
+     div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')= errorMessage
    
    .container.col-md-4.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
      h4 Log in to Classroom Companion
@@ -11,7 +12,8 @@ block content
           label(for="username") Username:
           input.form-control(type="text",
                 id="username",
-                name="username",)
+                name="username",
+                autofocus)
           label(for="password") Password:
           input.form-control(type="password",
                 id="password",

@@ -34,3 +34,7 @@ li.nav-item {
 br {
   user-select: none;
 }
+
+.errorMessage {
+  color: red;
+}

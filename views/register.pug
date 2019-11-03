@@ -1,7 +1,8 @@
 extends main
 block content
    br
-   div(class='errorMessage')= errorMessage
+   if (errorMessage)
+     div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')= errorMessage
 
    .container.col-md-4.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
      h4 Create your account
@@ -11,7 +12,8 @@ block content
         input.form-control(type='text',
               id='username',
               name='username',
-              onfocusout='validateUsername(document.register_form.username)')
+              onfocusout='validateUsername(document.register_form.username)'
+              autofocus)
         p(id="username_valid" style="text-align: right; color: red;") 
         label(for='email') Email:
         input.form-control(type='text',

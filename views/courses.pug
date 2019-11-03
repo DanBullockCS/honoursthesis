@@ -1,0 +1,17 @@
+extends main
+
+block content
+  br
+  if (errorMessage)
+    div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')= errorMessage
+  h1.pagetitle= title
+  br
+  .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+    label(for="users-classes") Choose a Class:
+    select(class="form-control" id="users-classes")
+      option #{courseName}
+    br
+    label(for="student-names-display") Class Student List:
+    ul.list-group(id="student-names-display")
+      li.list-group-item #{studentList}
+    br

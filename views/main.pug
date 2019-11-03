@@ -23,8 +23,12 @@ header.sticky-top
         li.nav-item
           a.nav-link(href='/' title="Home")
             | Home
-        li.nav-item
-          a.nav-link(href='/account' title="Account") Account
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Account")
+            | Account
+          .dropdown-menu
+            a.dropdown-item(href='/account' title="Account") Settings
+            a.dropdown-item(href='/mycourses' title="Courses") My Courses
         li.nav-item
           a.nav-link(href='#' title="Whiteboard") Whiteboard
         li.nav-item

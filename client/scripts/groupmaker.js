@@ -36,7 +36,6 @@ function reshuffle() {
   studentArr = putIntoGroups(studentArr, groupSize);
 
   var numberOfGroups = studentArr.length;
-
   var table = document.getElementById("group-table");
   table.innerHTML = ""; // clear table initially
 

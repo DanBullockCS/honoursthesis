@@ -1,3 +1,5 @@
+// Note: classes are called "courses" on the backend
+
 // JS libraries
 let express = require('express');
 let app = express();
@@ -55,11 +57,20 @@ let userSchema = new Schema({
    },
    email: String,
    hashedPassword: String,
-   classes: {}
 }, {
    collection: 'users'
 });
+
+let courseSchema = new Schema({
+   ownerName: String,
+   courseName: String,
+   studentList: [],
+}, {
+   collection: 'courses'
+});
+
 let User = mongoose.model('user', userSchema);
+let Course = mongoose.model('course', courseSchema);
 
 // Routes
 app.get('/', function(request, response) {
@@ -157,45 +168,79 @@ app.get('/account', function(request, response) {
     email = results[0].email;
 
     response.render('account', {
-      title: 'Your Account',
+      title: 'Account Settings',
       username: username,
       email: email,
     });
   });
+
 });
 
-// Adding a class to the teachers (user) database
+app.get('/mycourses', function(request, response) {
+  Course.find({ownerName: request.session.username}).then(function(results) {
+    courseName = results[0].courseName;
+    studentList = results[0].studentList;
+
+    response.render('courses', {
+      title: 'My Courses',
+      courseName: courseName,
+      studentList: studentList,
+    });
+  }).catch(function(error) {
+      // error finding courses or you haven't created any
+      console.log('catch: User does not have any courses and is loading course page');
+      response.render('courses', {
+         errorMessage: 'Error: no courses created! Create a course on the account settings page;'
+      });
+   });
+});
+
+// Creating a course with the course schema
 app.post('/createClass', function(request, response) {
-  class_name = request.body.enter_class_name;
-  student_list = request.body.enter_student_names;
+  ownername = request.session.username;
+  course_name = request.body.enter_class_name;
+  student_list = request.body.enter_student_names.split("\n");
+  // Delete any unintended newline or whitespace entrys
+  for (let i = 0; i < student_list.length; i++) {
+    if (!student_list[i].trim()) {student_list.splice(i);}
+  }
 
-  var entireStudentList = [];
-  var entireClassList = [];
-
-  User.find({username: username}).then(function(results) {
-    entireStudentList = results[0].classes.studentList;
-    entireClassList = results[0].classes.className;
+  newCourse = new Course({
+    ownerName: ownername,
+    courseName: course_name,
+    studentList: student_list,
   });
 
-  entireClassList.push(class_name);
-  entireStudentList.push(student_list);
-
-  User.updateOne(
-    {username: username},
-    {$set: {"classes.className": entireClassList, "classes.studentList": entireStudentList}},
-    {multi: false},
-    function(error) {
-      if ((error)) {
-        console.log("user not updated");
-      } else {
-        console.log("user updated");
+  newCourse.save(function(error) {
+     if (error) {
+        response.render('account',
+           {errorMessage: ''});
+     } else {
         response.render('account', {
-          title: 'Your Account',
-          username: username,
-          email: email,
+           title: 'Account Settings',
+           username: username,
+           email: email,
         });
-      }
-    });
+     }
+  });
+
+  // old code to update
+  // User.updateOne(
+  //   {username: username},
+  //   {$set: {"courses.courseName": entireClassList, "courses.studentList": entireStudentList}},
+  //   {multi: false},
+  //   function(error) {
+  //     if ((error)) {
+  //       console.log("user not updated");
+  //     } else {
+  //       console.log("user updated");
+  //       response.render('account', {
+  //         title: 'Your Account',
+  //         username: username,
+  //         email: email,
+  //       });
+  //     }
+  //   });
 });
 
 app.get('/groupMaker', function(request, response) {
