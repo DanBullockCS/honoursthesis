@@ -21,7 +21,8 @@ block content
       div.form-group
         label(for="paste-or-excel") Enter your student's names as:
         select(class="form-control" id="paste-or-excel")
-          option Paste/type list (Seperated by a new line for each student)
+          option.disabled.selected.value(style="display: none;") -- select how to input student names --
+          option Paste list (Seperated by a new line for each student)
           option Excel spreadsheet (.xlsx)
       div.form-group(id="paste-input")
         label(for="enter_student_names") Paste all the names of the students in the class:

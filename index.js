@@ -178,12 +178,15 @@ app.get('/account', function(request, response) {
 
 app.get('/mycourses', function(request, response) {
   Course.find({ownerName: request.session.username}).then(function(results) {
-    courseName = results[0].courseName;
-    studentList = results[0].studentList;
+    var courseNames = [], studentList = [];
+    for (i = 0; i < results.length; i++) {
+      courseNames.push(results[i].courseName);
+      studentList.push(results[i].studentList);
+    }
 
     response.render('courses', {
       title: 'My Courses',
-      courseName: courseName,
+      courseName: courseNames,
       studentList: studentList,
     });
   }).catch(function(error) {
@@ -193,6 +196,28 @@ app.get('/mycourses', function(request, response) {
          errorMessage: 'Error: no courses created! Create a course on the account settings page;'
       });
    });
+});
+
+
+app.post('/reloadStudentList', function (request, response) {
+    Course.find({ownerName: request.session.username}).then(function(results) {
+      var courseNames = [], studentList = [];
+      for (i = 0; i < results.length; i++) {
+        courseNames.push(results[i].courseName);
+        studentList.push(results[i].studentList);
+      }
+      // Pass studentList back to front end
+      response.json({
+        courseNames: courseNames,
+        studentList: studentList,
+      });
+    }).catch(function(error) {
+        // error finding courses or you haven't created any
+        console.log('catch: User does not have any courses and is loading course page');
+        response.render('courses', {
+           errorMessage: 'Error: no courses created! Create a course on the account settings page;'
+        });
+     });
 });
 
 // Creating a course with the course schema
