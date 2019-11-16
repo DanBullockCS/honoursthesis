@@ -72,7 +72,7 @@ let courseSchema = new Schema({
 let User = mongoose.model('user', userSchema);
 let Course = mongoose.model('course', courseSchema);
 
-// Routes
+/**************** Routes ****************/
 app.get('/', function(request, response) {
    username = request.session.username;
    response.render('index', {
@@ -161,7 +161,7 @@ app.post('/processRegistration', function(request, response) {
    });
 });
 
-
+/**************** Account Page ****************/
 app.get('/account', function(request, response) {
   User.find({username: username}).then(function(results) {
     username = results[0].username;
@@ -175,6 +175,7 @@ app.get('/account', function(request, response) {
   });
 });
 
+/**************** MyCourses page ****************/
 app.get('/mycourses', function(request, response) {
   Course.find({ownerName: request.session.username}).then(function(results) {
     var courseNames = [];
@@ -197,18 +198,47 @@ app.get('/mycourses', function(request, response) {
 
 app.post('/reloadStudentList', function (request, response) {
   var cName = request.body.courseName;
-    Course.find({courseName: cName}).then(function(results) {
-      var sList = results[0].studentList;
-      // Pass studentList back to front end
-      response.json({ studentList: sList });
-    }).catch(function(error) {
-        // error finding courses or you haven't created any
-        console.log('catch: User does not have any courses and is loading course page');
-        response.render('courses', {
-           errorMessage: 'Error: no courses created! Create a course on the account settings page;'
-        });
-     });
+  Course.find({courseName: cName}).then(function(results) {
+    var sList = results[0].studentList;
+    // Pass studentList back to front end
+    response.json({ studentList: sList });
+  }).catch(function(error) {
+    // Error finding courses or you haven't created any
+    console.log('catch: User does not have any courses and is loading course page');
+    response.render('courses', {
+      errorMessage: 'Error: no courses created! Create a course on the account settings page;'
+    });
+  });
 });
+
+app.post('/deleteClass', function(request, response) {
+  var cName = request.body.courseName;
+  Course.deleteOne({courseName: cName}, function(error) {
+      if (error) {
+        console.log("Error deleting class!");
+      } else {
+        console.log(cName, " was deleted");
+      }
+   });
+});
+
+app.post('/deleteStudent', function(request, response) {
+
+});
+
+app.post('/addingStudent', function(request, response) {
+  var cName = request.body.courseName;
+  var newStudentName = request.body.newStudentName;
+
+  // Course.updateOne({courseName: cName}, {multi: false}, function(error) {
+  //   if (error) {
+  //     console.log(newStudentName, " being added failed!");
+  //   } else {
+  //     console.log(newStudentName, " has been added!");
+  //   }
+  // });
+});
+/************************************************/
 
 // Creating a course with the course schema
 app.post('/createClass', function(request, response) {
