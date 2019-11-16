@@ -1,5 +1,4 @@
 /* General CSS class */
-
 h1.pagetitle {
   text-align: center;
   width: 50%;
@@ -38,3 +37,15 @@ br {
 .errorMessage {
   color: red;
 }
+
+/* Adding x's to list items */
+.closeLI {
+  cursor: pointer;
+  user-select: none;
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  padding: 12px 16px;
+  transform: translate(0%, -50%);
+}
+.closeLI:hover {background: #bbb;}

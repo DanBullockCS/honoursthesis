@@ -10,9 +10,10 @@ block content
   h1.pagetitle= title
   br    
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(id= "classes-display")
-    label(for="users-classes") Choose a Class:
+    p Create a class on the <a href="/account#CreateClass">settings page</a>.
+    label(for="users-classes") Select a Class:
     select(class="form-control" id="users-classes")
-      option.disabled.selected.value(style="display: none;") -- select a class --
+      option.disabled.selected.value(id="disabled-option" style="display: none;") -- select a class --
       if (courseName)
         each course in courseName
           option= course
@@ -20,6 +21,27 @@ block content
     label(for="student-names-display") Class Student List:
     ul.list-group(id="student-names-display")
     br
+    button.btn.btn-danger.text-white.mr-1.float-left(aria-label="Right Align" data-toggle="modal"
+      data-target="#delete-modal" id="delete-class-btn") Delete Class 
+      i.fa.fa-trash(aria-hidden="true")
+    button.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="add-student-btn" onclick="addStudent();") Add New Student 
+      i.fa.fa-plus(aria-hidden="true")
+    br
+    br
   // If user does not have any classes display this
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(id="no-class-display" style="display: none;")
-    p You have no classes! To create a class, go to the <a href="/account#CreateClass">account page</a>.
+    p You have no classes! To create a class, go to the <a href="/account#CreateClass">settings page</a>.
+    
+  // Delete class modal
+  .modal.fade(tabindex='-1' role='dialog' id="delete-modal")
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title Delete Selected Class?
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+        .modal-body
+          p Are you sure you want to delete this class?
+        .modal-footer
+          button.btn.btn-danger(type='button' data-dismiss='modal' id="confirm-delete-class-btn" onclick="deleteClass();") Yes
+          button.btn.btn-secondary(type='button' data-dismiss='modal') No

@@ -173,21 +173,18 @@ app.get('/account', function(request, response) {
       email: email,
     });
   });
-
 });
 
 app.get('/mycourses', function(request, response) {
   Course.find({ownerName: request.session.username}).then(function(results) {
-    var courseNames = [], studentList = [];
+    var courseNames = [];
     for (i = 0; i < results.length; i++) {
       courseNames.push(results[i].courseName);
-      studentList.push(results[i].studentList);
     }
 
     response.render('courses', {
       title: 'My Courses',
       courseName: courseNames,
-      studentList: studentList,
     });
   }).catch(function(error) {
       // error finding courses or you haven't created any
@@ -198,19 +195,12 @@ app.get('/mycourses', function(request, response) {
    });
 });
 
-
 app.post('/reloadStudentList', function (request, response) {
-    Course.find({ownerName: request.session.username}).then(function(results) {
-      var courseNames = [], studentList = [];
-      for (i = 0; i < results.length; i++) {
-        courseNames.push(results[i].courseName);
-        studentList.push(results[i].studentList);
-      }
+  var cName = request.body.courseName;
+    Course.find({courseName: cName}).then(function(results) {
+      var sList = results[0].studentList;
       // Pass studentList back to front end
-      response.json({
-        courseNames: courseNames,
-        studentList: studentList,
-      });
+      response.json({ studentList: sList });
     }).catch(function(error) {
         // error finding courses or you haven't created any
         console.log('catch: User does not have any courses and is loading course page');
