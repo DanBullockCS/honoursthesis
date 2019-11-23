@@ -72,7 +72,7 @@ $(document).ready(function() {
             .addClass('closeLI')
             .appendTo(li)
             .html("&times;")
-            .attr("id", i)
+            .attr("id", "span"+i)
             .click(function() {deleteStudent(span);});
         });
       }
@@ -100,8 +100,18 @@ function deleteClass() {
 
 // Deleting a student via the x button
 function deleteStudent(span) {
-  // TODO
-  console.log("Deleting student", span.attr("id"));
+  let idToRemove = span.attr("id");
+  $('#'+idToRemove).parent().remove();  // delete the item from list
+  idToRemove = idToRemove.substring(4); // get rid of the "span" on id
+
+  $.ajax({
+    url: "/deleteStudent",
+    method: "POST",
+    data: {
+      courseName: selectedClass,
+      sIndex: idToRemove,
+    }
+  });
 }
 
 // Adding a student to the list
@@ -132,7 +142,7 @@ function addStudent() {
     method: "POST",
     data: {
       courseName: selectedClass,
-      newStudentName: newStudentName 
+      newStudentName: newStudentName
     }
   });
 }

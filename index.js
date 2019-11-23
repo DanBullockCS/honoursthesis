@@ -222,21 +222,22 @@ app.post('/deleteClass', function(request, response) {
    });
 });
 
-app.post('/deleteStudent', function(request, response) {
+app.post('/deleteStudent', async function(request, response) {
+  var cName = request.body.courseName;
+  var sIndex = request.body.sIndex;
 
+  const doc = await Course.findOne({courseName: cName});
+  doc.studentList.splice(sIndex, 1);
+  await doc.save();
 });
 
-app.post('/addingStudent', function(request, response) {
+app.post('/addingStudent', async function(request, response) {
   var cName = request.body.courseName;
   var newStudentName = request.body.newStudentName;
 
-  // Course.updateOne({courseName: cName}, {multi: false}, function(error) {
-  //   if (error) {
-  //     console.log(newStudentName, " being added failed!");
-  //   } else {
-  //     console.log(newStudentName, " has been added!");
-  //   }
-  // });
+  const doc = await Course.findOne({courseName: cName});
+  doc.studentList.push(newStudentName);
+  await doc.save();
 });
 /************************************************/
 
@@ -245,10 +246,6 @@ app.post('/createClass', function(request, response) {
   ownername = request.session.username;
   course_name = request.body.enter_class_name;
   student_list = request.body.enter_student_names.split("\n");
-  // Delete any unintended newline or whitespace entrys
-  for (let i = 0; i < student_list.length; i++) {
-    if (!student_list[i].trim()) {student_list.splice(i);}
-  }
 
   newCourse = new Course({
     ownerName: ownername,
@@ -268,24 +265,6 @@ app.post('/createClass', function(request, response) {
         });
      }
   });
-
-  // old code to update
-  // User.updateOne(
-  //   {username: username},
-  //   {$set: {"courses.courseName": entireClassList, "courses.studentList": entireStudentList}},
-  //   {multi: false},
-  //   function(error) {
-  //     if ((error)) {
-  //       console.log("user not updated");
-  //     } else {
-  //       console.log("user updated");
-  //       response.render('account', {
-  //         title: 'Your Account',
-  //         username: username,
-  //         email: email,
-  //       });
-  //     }
-  //   });
 });
 
 app.get('/groupMaker', function(request, response) {
