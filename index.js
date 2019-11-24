@@ -23,7 +23,6 @@ mongoose.connect('mongodb://localhost:27017/classroomcompanion', {
          return console.error('Unable to connect:', error);
       }
    });
-//, {useMongoClient: true});
 mongoose.set('useCreateIndex', true);
 
 // Middleware
@@ -77,7 +76,7 @@ app.get('/', function(request, response) {
    username = request.session.username;
    response.render('index', {
       title: 'Home',
-      description: 'This is the main page',
+      description: 'Welcome to Classroom Companion! The website is currently under construction.',
       username: username
    });
 });
@@ -161,22 +160,12 @@ app.post('/processRegistration', function(request, response) {
    });
 });
 
-/**************** Account Page ****************/
-app.get('/account', function(request, response) {
-  User.find({username: username}).then(function(results) {
-    username = results[0].username;
-    email = results[0].email;
-
-    response.render('account', {
-      title: 'Account Settings',
-      username: username,
-      email: email,
-    });
-  });
-});
-
 /**************** MyCourses page ****************/
 app.get('/mycourses', function(request, response) {
+  // User not logged in redirect them
+  // TODO make routes like this, seems deprecated right now
+  //if (request.body.username == '') { response.redirect('/'); }
+
   Course.find({ownerName: request.session.username}).then(function(results) {
     var courseNames = [];
     for (i = 0; i < results.length; i++) {
@@ -227,7 +216,7 @@ app.post('/deleteStudent', async function(request, response) {
   var sIndex = request.body.sIndex;
 
   const doc = await Course.findOne({courseName: cName});
-  doc.studentList.splice(sIndex, 1);
+  doc.studentList.splice(sIndex, 1); // deleting student at index sIndex
   await doc.save();
 });
 
@@ -236,12 +225,25 @@ app.post('/addingStudent', async function(request, response) {
   var newStudentName = request.body.newStudentName;
 
   const doc = await Course.findOne({courseName: cName});
-  doc.studentList.push(newStudentName);
+  doc.studentList.push(newStudentName); // adding student
   await doc.save();
 });
 /************************************************/
 
-// Creating a course with the course schema
+/**************** Account Page ****************/
+app.get('/account', function(request, response) {
+  User.find({username: username}).then(function(results) {
+    username = results[0].username;
+    email = results[0].email;
+
+    response.render('account', {
+      title: 'Account Settings',
+      username: username,
+      email: email,
+    });
+  });
+});
+
 app.post('/createClass', function(request, response) {
   ownername = request.session.username;
   course_name = request.body.enter_class_name;
@@ -266,17 +268,37 @@ app.post('/createClass', function(request, response) {
      }
   });
 });
+/************************************************/
 
-app.get('/groupMaker', function(request, response) {
-   response.render('groupMaker', {
-      title: 'Group Maker'
-   });
+/**************** Attendance Page ****************/
+app.get('/attendance', function(request, response) {
+  Course.find({ownerName: request.session.username}).then(function(results) {
+    var courseNames = [];
+    for (i = 0; i < results.length; i++) {
+      courseNames.push(results[i].courseName);
+    }
+
+    response.render('attendance', {
+      title: 'Attendance Tracker',
+      courseName: courseNames,
+    });
+  });
 });
 
-app.get('/attendance', function(request, response) {
-   response.render('attendance', {
-      title: 'Attendance Tracker'
-   });
+app.post('/reloadAttendanceSheet', function (request, response) {
+  var cName = request.body.courseName;
+  Course.find({courseName: cName}).then(function(results) {
+    var sList = results[0].studentList;
+    // Pass studentList back to front end
+    response.json({ studentList: sList });
+  });
+});
+/************************************************/
+
+app.get('/groupMaker', function(request, response) {
+  response.render('groupMaker', {
+    title: 'Group Maker'
+  });
 });
 
 app.get('/logout', function(request, response) {

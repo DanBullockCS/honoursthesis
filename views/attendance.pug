@@ -1,9 +1,41 @@
 extends main
 
 block content
-  br
-  if (errorMessage)
-    div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')= errorMessage
-  h1.pagetitle= title
-  br
-  .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+  append head 
+    script(language='JavaScript' type='text/javascript' src='/scripts/attendance.js')
+    br
+    if (errorMessage)
+      div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')= errorMessage
+    h1.pagetitle= title
+    br
+    .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+      p Create a class on the <a href="/account#CreateClass">settings page</a>.
+      label(for="users-classes") Select a Class:
+      select(class="form-control" id="users-classes")
+        option.disabled.selected.value(id="disabled-option" style="display: none;") -- select a class --
+        if (courseName)
+          each course in courseName
+            option= course
+      br
+    // Attendance Sheet
+    .container(id="attendance-sheet" style="display: none;")
+      div.stage.shadow
+        table.table(id="attendance-table")
+          thead.thead-dark
+            tr
+              th Name
+              th Monday, September 21<sup>st</sup>
+              th Tuesday, September 22<sup>nd</sup>
+              th Wednesday, September 23<sup>rd</sup>
+              th Thursday, September 24<sup>th</sup>
+              th Friday, September 25<sup>th</sup>
+          tbody
+            tr
+              td Frank
+              td <input type="checkbox">
+              td <input type="checkbox">
+              td <input type="checkbox">
+              td <input type="checkbox">
+              td <input type="checkbox">
+              
+            
