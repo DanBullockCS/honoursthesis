@@ -12,10 +12,21 @@ block content
       p Create a class on the <a href="/account#CreateClass">settings page</a>.
       label(for="users-classes") Select a Class:
       select(class="form-control" id="users-classes")
-        option.disabled.selected.value(id="disabled-option" style="display: none;") -- select a class --
+        option.disabled.selected.value(id="disabled-option-class" style="display: none;") -- select a class --
         if (courseName)
           each course in courseName
             option= course
+      br
+      label(for="previous-sheets") Previous Attendance Sheets
+      select(class="form-control" id="previous-sheets")
+        option.disabled.selected.value(id="disabled-option-prev" style="display: none;") -- select an attendance sheet --
+      br
+      label(for="enter-attend-date") Enter Today's Date:
+      input.form-control(type='date',name='enter-attend-date',id="enter-attend-date")
+      br
+      a.btn.btn-success.text-white.ml-1.float-right.disabled(aria-label="Right Align" id="new-sheet-btn") New Attendance Sheet 
+        i.fa.fa-plus(aria-hidden="true")
+      br
       br
     // Attendance Sheet
     .container(id="attendance-sheet" style="display: none;")
@@ -23,19 +34,25 @@ block content
         table.table(id="attendance-table")
           thead.thead-dark
             tr
-              th Name
-              th Monday, September 21<sup>st</sup>
-              th Tuesday, September 22<sup>nd</sup>
-              th Wednesday, September 23<sup>rd</sup>
-              th Thursday, September 24<sup>th</sup>
-              th Friday, September 25<sup>th</sup>
+              th Attendance Sheet for:
+              th(colspan='3', id="current-date")
           tbody
             tr
-              td Frank
-              td <input type="checkbox">
-              td <input type="checkbox">
-              td <input type="checkbox">
-              td <input type="checkbox">
-              td <input type="checkbox">
-              
+              td Jim
+              td
+                button.btn.btn-secondary.text-white(id="pres1", onclick="setAttendance(this.id)") Present
+              td
+                button.btn.btn-secondary.text-white(id="abse1", onclick="setAttendance(this.id)") Absent
+              td
+                button.btn.btn-secondary.text-white(id="late1", onclick="setAttendance(this.id)") Late
+            tr
+              td Steve
+              td
+                button.btn.btn-secondary.text-white(id="pres2", onclick="setAttendance(this.id)") Present
+              td
+                button.btn.btn-secondary.text-white(id="abse2", onclick="setAttendance(this.id)") Absent
+              td
+                button.btn.btn-secondary.text-white(id="late2", onclick="setAttendance(this.id)") Late
+        a.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="save-btn") Save 
+          i.fas.fa-save(aria-hidden="true")    
             

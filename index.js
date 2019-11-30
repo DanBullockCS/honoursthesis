@@ -64,6 +64,8 @@ let courseSchema = new Schema({
    ownerName: String,
    courseName: String,
    studentList: [],
+   dateList: [],
+   attendanceList: [],
 }, {
    collection: 'courses'
 });
