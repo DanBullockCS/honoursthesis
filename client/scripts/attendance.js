@@ -13,8 +13,22 @@ $(document).ready(function() {
   });
 
   
+  // show attendance sheet if they are making a new one
+  $('#new-sheet-btn').click(function() {
+    // Show the attendance sheet
+    $('#attendance-sheet').css('display', 'block');
+
+    
+  });
+
+  // show attendance sheet if they are editing an old one
+  $('#previous-sheets').change(function() {
+    $('#attendance-sheet').css('display', 'block');
+  });
+
   $("#users-classes").change(function() {
-    $('#attendance-sheet').css('display', 'block'); // show attendance sheet on change
+    $('#previous-sheets-div').css('display', 'block');
+    $('#enter-date-div').css('display', 'block');
 
     $.ajax({
       url: "/reloadAttendanceSheet",
@@ -27,32 +41,38 @@ $(document).ready(function() {
       }
     });
   });
+
 });
+
+function buildAttendanceSheet() {
+
+}
+
 
 function setAttendance(id) {
   let attendance = id.substr(0, 4); // pres, abse, or late 
   let idNum = id.substr(4);         // Get the id number of the three buttons
   
   if (attendance == "pres") {
-    $("#pres"+idNum).addClass('btn-warning');
-    $("#pres"+idNum).removeClass('btn-secondary');
-    $("#abse"+idNum).addClass('btn-secondary');
-    $("#late"+idNum).addClass('btn-secondary');
-    $('#abse'+idNum).removeClass('btn-warning');
+    $("#pres"+idNum).addClass('btn-success');
+    $("#pres"+idNum).removeClass('btn-outline-secondary');
+    $("#abse"+idNum).addClass('btn-outline-secondary');
+    $("#late"+idNum).addClass('btn-outline-secondary');
+    $('#abse'+idNum).removeClass('btn-danger');
     $('#late'+idNum).removeClass('btn-warning');
   } else if (attendance == "abse") {
-    $("#abse"+idNum).addClass('btn-warning');
-    $("#abse"+idNum).removeClass('btn-secondary');
-    $("#pres"+idNum).addClass('btn-secondary');
-    $("#late"+idNum).addClass('btn-secondary');
-    $('#pres'+idNum).removeClass('btn-warning');
+    $("#abse"+idNum).addClass('btn-danger');
+    $("#abse"+idNum).removeClass('btn-outline-secondary');
+    $("#pres"+idNum).addClass('btn-outline-secondary');
+    $("#late"+idNum).addClass('btn-outline-secondary');
+    $('#pres'+idNum).removeClass('btn-success');
     $('#late'+idNum).removeClass('btn-warning');
   } else if (attendance == "late") {
     $("#late"+idNum).addClass('btn-warning');
-    $("#late"+idNum).removeClass('btn-secondary');
-    $("#abse"+idNum).addClass('btn-secondary');
-    $("#pres"+idNum).addClass('btn-secondary');
-    $('#pres'+idNum).removeClass('btn-warning');
-    $('#abse'+idNum).removeClass('btn-warning');
+    $("#late"+idNum).removeClass('btn-outline-secondary');
+    $("#abse"+idNum).addClass('btn-outline-secondary');
+    $("#pres"+idNum).addClass('btn-outline-secondary');
+    $('#pres'+idNum).removeClass('btn-success');
+    $('#abse'+idNum).removeClass('btn-danger');
   }
 }
