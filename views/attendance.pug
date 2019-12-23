@@ -21,7 +21,9 @@ block content
         label(for="previous-sheets") View Previous Attendance Sheets:
         select(class="form-control" id="previous-sheets")
           option.disabled.selected.value(id="disabled-option-prev" style="display: none;") -- select an attendance sheet --
-          option Mon Dec 31 2018
+          if (dateList)
+            each date in dateList
+              option= date
         br
       div(id="enter-date-div", style="display: none;")
         label(for="enter-attend-date") Enter Today's Date:

@@ -15,10 +15,10 @@ app.use(express.static(__dirname + '/client'));
 // Database config
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost:27017/classroomcompanion', {
-      useUnifiedTopology: true,
-      useNewUrlParser: true
-   },
-   function(error) {
+   useUnifiedTopology: true,
+   useNewUrlParser: true
+},
+   function (error) {
       if (error) {
          return console.error('Unable to connect:', error);
       }
@@ -37,7 +37,7 @@ app.set('view engine', 'pug');
 
 // Configure sessions
 app.use(session({
-   genid: function(request) {
+   genid: function (request) {
       return uuid();
    },
    resave: false,
@@ -74,7 +74,7 @@ let User = mongoose.model('user', userSchema);
 let Course = mongoose.model('course', courseSchema);
 
 /**************** Routes ****************/
-app.get('/', function(request, response) {
+app.get('/', function (request, response) {
    username = request.session.username;
    response.render('index', {
       title: 'Home',
@@ -83,18 +83,18 @@ app.get('/', function(request, response) {
    });
 });
 
-app.get('/login', function(request, response) {
+app.get('/login', function (request, response) {
    response.render('login', {
       title: 'Login Page',
       errorMessage: ''
    });
 });
 
-app.post('/processLogin', function(request, response) {
+app.post('/processLogin', function (request, response) {
    username = request.body.username;
    password = request.body.password;
 
-   User.find({username: username}).then(function(results) {
+   User.find({ username: username }).then(function (results) {
       if (results.length != 1) {
          console.log('login: no user found');
          // Error logging in - no such user
@@ -119,7 +119,7 @@ app.post('/processLogin', function(request, response) {
             });
          }
       }
-   }).catch(function(error) {
+   }).catch(function (error) {
       // Error logging in - no such user
       console.log('login: catch');
       response.render('login', {
@@ -128,13 +128,13 @@ app.post('/processLogin', function(request, response) {
    });
 });
 
-app.get('/register', function(request, response) {
+app.get('/register', function (request, response) {
    response.render('register', {
       title: 'Register'
    });
 });
 
-app.post('/processRegistration', function(request, response) {
+app.post('/processRegistration', function (request, response) {
    username = request.body.username;
    email = request.body.email;
    password = request.body.pwd;
@@ -148,10 +148,10 @@ app.post('/processRegistration', function(request, response) {
       hashedPassword: hashedPassword
    });
 
-   newUser.save(function(error) {
+   newUser.save(function (error) {
       if (error) {
          response.render('register',
-            {errorMessage: 'Invalid registration data'});
+            { errorMessage: 'Invalid registration data' });
       } else {
          request.session.username = username; // Logged in
          response.render('registerConfirm', {
@@ -163,22 +163,22 @@ app.post('/processRegistration', function(request, response) {
 });
 
 /**************** MyCourses page ****************/
-app.get('/mycourses', function(request, response) {
-  // User not logged in redirect them
-  // TODO make routes like this, seems deprecated right now
-  //if (request.body.username == '') { response.redirect('/'); }
+app.get('/myclasses', function (request, response) {
+   // User not logged in redirect them
+   // TODO make routes like this, seems deprecated right now
+   //if (request.body.username == '') { response.redirect('/'); }
 
-  Course.find({ownerName: request.session.username}).then(function(results) {
-    var courseNames = [];
-    for (i = 0; i < results.length; i++) {
-      courseNames.push(results[i].courseName);
-    }
+   Course.find({ ownerName: request.session.username }).then(function (results) {
+      var courseNames = [];
+      for (i = 0; i < results.length; i++) {
+         courseNames.push(results[i].courseName);
+      }
 
-    response.render('courses', {
-      title: 'My Courses',
-      courseName: courseNames,
-    });
-  }).catch(function(error) {
+      response.render('courses', {
+         title: 'My Classes',
+         courseName: courseNames,
+      });
+   }).catch(function (error) {
       // error finding courses or you haven't created any
       console.log('catch: User does not have any courses and is loading course page');
       response.render('courses', {
@@ -188,128 +188,143 @@ app.get('/mycourses', function(request, response) {
 });
 
 app.post('/reloadStudentList', function (request, response) {
-  var cName = request.body.courseName;
-  Course.find({courseName: cName}).then(function(results) {
-    var sList = results[0].studentList;
-    // Pass studentList back to front end
-    response.json({ studentList: sList });
-  }).catch(function(error) {
-    // Error finding courses or you haven't created any
-    console.log('catch: User does not have any courses and is loading course page');
-    response.render('courses', {
-      errorMessage: 'Error: no courses created! Create a course on the account settings page;'
-    });
-  });
+   var cName = request.body.courseName;
+   Course.find({ courseName: cName }).then(function (results) {
+      var sList = results[0].studentList;
+      // Pass studentList back to front end
+      response.json({ studentList: sList });
+   }).catch(function (error) {
+      // Error finding courses or you haven't created any
+      console.log('catch: User does not have any courses and is loading course page');
+      response.render('courses', {
+         errorMessage: 'Error: no courses created! Create a course on the account settings page;'
+      });
+   });
 });
 
-app.post('/deleteClass', function(request, response) {
-  var cName = request.body.courseName;
-  Course.deleteOne({courseName: cName}, function(error) {
+app.post('/deleteClass', function (request, response) {
+   var cName = request.body.courseName;
+   Course.deleteOne({ courseName: cName }, function (error) {
       if (error) {
-        console.log("Error deleting class!");
+         console.log("Error deleting class!");
       } else {
-        console.log(cName, " was deleted");
+         console.log(cName, " was deleted");
       }
    });
 });
 
-app.post('/deleteStudent', async function(request, response) {
-  var cName = request.body.courseName;
-  var sIndex = request.body.sIndex;
+app.post('/deleteStudent', async function (request, response) {
+   var cName = request.body.courseName;
+   var sIndex = request.body.sIndex;
 
-  const doc = await Course.findOne({courseName: cName});
-  doc.studentList.splice(sIndex, 1); // deleting student at index sIndex
-  await doc.save();
+   const doc = await Course.findOne({ courseName: cName });
+   doc.studentList.splice(sIndex, 1); // deleting student at index sIndex
+   await doc.save();
 });
 
-app.post('/addingStudent', async function(request, response) {
-  var cName = request.body.courseName;
-  var newStudentName = request.body.newStudentName;
+app.post('/addingStudent', async function (request, response) {
+   var cName = request.body.courseName;
+   var newStudentName = request.body.newStudentName;
 
-  const doc = await Course.findOne({courseName: cName});
-  doc.studentList.push(newStudentName); // adding student
-  await doc.save();
+   const doc = await Course.findOne({ courseName: cName });
+   doc.studentList.push(newStudentName); // adding student
+   await doc.save();
 });
 /************************************************/
 
 /**************** Account Page ****************/
-app.get('/account', function(request, response) {
-  User.find({username: username}).then(function(results) {
-    username = results[0].username;
-    email = results[0].email;
+app.get('/account', function (request, response) {
+   User.find({ username: username }).then(function (results) {
+      username = results[0].username;
+      email = results[0].email;
 
-    response.render('account', {
-      title: 'Account Settings',
-      username: username,
-      email: email,
-    });
-  });
+      response.render('account', {
+         title: 'Account Settings',
+         username: username,
+         email: email,
+      });
+   });
 });
 
-app.post('/createClass', function(request, response) {
-  ownername = request.session.username;
-  course_name = request.body.enter_class_name;
-  student_list = request.body.enter_student_names.split("\n");
+app.post('/createClass', function (request, response) {
+   ownername = request.session.username;
+   course_name = request.body.enter_class_name;
+   student_list = request.body.enter_student_names.split("\n");
 
-  newCourse = new Course({
-    ownerName: ownername,
-    courseName: course_name,
-    studentList: student_list,
-  });
+   newCourse = new Course({
+      ownerName: ownername,
+      courseName: course_name,
+      studentList: student_list,
+   });
 
-  newCourse.save(function(error) {
-     if (error) {
-        response.render('account',
-           {errorMessage: ''});
-     } else {
-        response.render('account', {
-           title: 'Account Settings',
-           username: username,
-           email: email,
-        });
-     }
-  });
+   newCourse.save(function (error) {
+      if (error) {
+         response.render('account',
+            { errorMessage: '' });
+      } else {
+         response.render('account', {
+            title: 'Account Settings',
+            username: username,
+            email: email,
+         });
+      }
+   });
 });
 /************************************************/
 
 /**************** Attendance Page ****************/
-app.get('/attendance', function(request, response) {
-  Course.find({ownerName: request.session.username}).then(function(results) {
-    var courseNames = [];
-    for (i = 0; i < results.length; i++) {
-      courseNames.push(results[i].courseName);
-    }
+app.get('/attendance', function (request, response) {
+   Course.find({ ownerName: request.session.username }).then(function (results) {
+      var courseNames = [];
+      for (i = 0; i < results.length; i++) {
+         courseNames.push(results[i].courseName);
+      }
 
-    response.render('attendance', {
-      title: 'Attendance Tracker',
-      courseName: courseNames,
-    });
-  });
+      response.render('attendance', {
+         title: 'Attendance Tracker',
+         courseName: courseNames,
+      });
+   });
 });
 
 app.post('/reloadAttendanceSheet', function (request, response) {
-  var cName = request.body.courseName;
-  Course.find({courseName: cName}).then(function(results) {
-    var sList = results[0].studentList;
-    // Pass studentList back to front end
-    response.json({ studentList: sList });
-  });
+   var cName = request.body.courseName;
+   Course.find({ courseName: cName }).then(function (results) {
+      var sList = results[0].studentList;
+      var dList = results[0].dateList;
+      var aList = results[0].attendanceList;
+      // Pass studentList back to front end
+      response.json({
+         studentList: sList,
+         dateList: dList,
+         attendanceList: aList,
+      });
+   });
+});
+
+app.post('/addingNewAttendanceSheet', async function (request, response) {
+   var cName = request.body.courseName;
+   var dateEntered = request.body.dateEntered;
+
+   const doc = await Course.findOne({ courseName: cName });
+   doc.dateList.push(dateEntered); // adding the entered date
+   await doc.save();
 });
 /************************************************/
 
-app.get('/groupMaker', function(request, response) {
-  response.render('groupMaker', {
-    title: 'Group Maker'
-  });
+app.get('/groupMaker', function (request, response) {
+   response.render('groupMaker', {
+      title: 'Group Maker'
+   });
 });
 
-app.get('/logout', function(request, response) {
+app.get('/logout', function (request, response) {
    request.session.username = '';
    response.redirect('/');
 });
 
 // Web listener
 app.set('port', process.env.PORT || 3000);
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), function () {
    console.log('ClassroomCompanion Server listening on port ' + app.get('port'));
 });

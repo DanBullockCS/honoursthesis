@@ -1,32 +1,49 @@
-$(document).ready(function() {
-  var dateEntered;
+$(document).ready(function () {
+  var dateEntered, selectedClass, dateList;
 
   // New Attendance Sheet button 
-  $("#enter-attend-date").change(function() {
-    var input = this.value;
-    dateEntered = new Date(input);
+  $("#enter-attend-date").change(function () {
+    let input = this.value;
+    dateEntered = new Date(input.replace(/-/g, '\/')); // Had to replace - with / due to date format issues
+    dateEntered = dateEntered.toString().substr(0, 16);
     $('#new-sheet-btn').removeClass("disabled");
     if (dateEntered == 'Invalid Date') {
       $('#new-sheet-btn').addClass("disabled");
     }
-    $('#current-date').text(dateEntered.toString().substr(0, 16));  
+    $('#current-date').text(dateEntered);
   });
 
-  
+
   // show attendance sheet if they are making a new one
-  $('#new-sheet-btn').click(function() {
+  $('#new-sheet-btn').click(function () {
     // Show the attendance sheet
     $('#attendance-sheet').css('display', 'block');
-
-    
+    // Add date to the datelist in the backend
+    $.ajax({
+      url: "/addingNewAttendanceSheet",
+      method: "POST",
+      data: {
+        "courseName": selectedClass,
+        "dateEntered": dateEntered
+      }
+    });
+    // Add the date to the select list
+    var select = $('#previous-sheets');
+    var optionDate = $('<option/>')
+      .addClass('value')
+      .appendTo(select)
+      .text(dateEntered.toString().substr(0, 16));
   });
 
   // show attendance sheet if they are editing an old one
-  $('#previous-sheets').change(function() {
+  $('#previous-sheets').change(function () {
     $('#attendance-sheet').css('display', 'block');
+
+
   });
 
-  $("#users-classes").change(function() {
+  $("#users-classes").change(function () {
+    selectedClass = $(this).children("option:selected").val();
     $('#previous-sheets-div').css('display', 'block');
     $('#enter-date-div').css('display', 'block');
 
@@ -34,10 +51,19 @@ $(document).ready(function() {
       url: "/reloadAttendanceSheet",
       method: "POST",
       data: {
-
+        "courseName": selectedClass
       },
       success: (data) => {
-          
+        //data.studentList use to populate the table
+        //data.attendanceList use to populate the table
+        dateList = data.dateList;
+        var select = $('#previous-sheets');
+        $.each(data.dateList, function (i) {
+          var optionDate = $('<option/>')
+            .addClass('value')
+            .appendTo(select)
+            .text(data.dateList[i]);
+        });
       }
     });
   });
@@ -52,27 +78,27 @@ function buildAttendanceSheet() {
 function setAttendance(id) {
   let attendance = id.substr(0, 4); // pres, abse, or late 
   let idNum = id.substr(4);         // Get the id number of the three buttons
-  
+
   if (attendance == "pres") {
-    $("#pres"+idNum).addClass('btn-success');
-    $("#pres"+idNum).removeClass('btn-outline-secondary');
-    $("#abse"+idNum).addClass('btn-outline-secondary');
-    $("#late"+idNum).addClass('btn-outline-secondary');
-    $('#abse'+idNum).removeClass('btn-danger');
-    $('#late'+idNum).removeClass('btn-warning');
+    $("#pres" + idNum).addClass('btn-success');
+    $("#pres" + idNum).removeClass('btn-outline-secondary');
+    $("#abse" + idNum).addClass('btn-outline-secondary');
+    $("#late" + idNum).addClass('btn-outline-secondary');
+    $('#abse' + idNum).removeClass('btn-danger');
+    $('#late' + idNum).removeClass('btn-warning');
   } else if (attendance == "abse") {
-    $("#abse"+idNum).addClass('btn-danger');
-    $("#abse"+idNum).removeClass('btn-outline-secondary');
-    $("#pres"+idNum).addClass('btn-outline-secondary');
-    $("#late"+idNum).addClass('btn-outline-secondary');
-    $('#pres'+idNum).removeClass('btn-success');
-    $('#late'+idNum).removeClass('btn-warning');
+    $("#abse" + idNum).addClass('btn-danger');
+    $("#abse" + idNum).removeClass('btn-outline-secondary');
+    $("#pres" + idNum).addClass('btn-outline-secondary');
+    $("#late" + idNum).addClass('btn-outline-secondary');
+    $('#pres' + idNum).removeClass('btn-success');
+    $('#late' + idNum).removeClass('btn-warning');
   } else if (attendance == "late") {
-    $("#late"+idNum).addClass('btn-warning');
-    $("#late"+idNum).removeClass('btn-outline-secondary');
-    $("#abse"+idNum).addClass('btn-outline-secondary');
-    $("#pres"+idNum).addClass('btn-outline-secondary');
-    $('#pres'+idNum).removeClass('btn-success');
-    $('#abse'+idNum).removeClass('btn-danger');
+    $("#late" + idNum).addClass('btn-warning');
+    $("#late" + idNum).removeClass('btn-outline-secondary');
+    $("#abse" + idNum).addClass('btn-outline-secondary');
+    $("#pres" + idNum).addClass('btn-outline-secondary');
+    $('#pres' + idNum).removeClass('btn-success');
+    $('#abse' + idNum).removeClass('btn-danger');
   }
 }
