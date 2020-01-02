@@ -1,6 +1,6 @@
 doctype html
 // Thesis Project Fall/Winter 2019/2020
-// Author: Daniel Bullock
+// Author: Daniel Bullock @DanBullockCS
 head
   meta(charset='utf-8' name='viewport' content='width=device-width, initial-scale=1')
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous')
@@ -17,44 +17,48 @@ header.sticky-top
   nav.navbar.navbar-expand-sm.navbar-dark.sticky-top(style='background-color: #222222;')
     // Logo
     a.navbar-brand(href='/')
-      img(src='/images/CCv3.png' alt='Classroom Companion Logo' width='200px' title="Classroom Companion Home Page")
-    ul.nav.navbar-nav.ml-auto
-      if (username && username !== '')
-        li.nav-item
-          a.nav-link(href='/' title="Home")
-            | Home
-        li.nav-item.dropdown
-          a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Account")
-            | Account
-          .dropdown-menu
-            a.dropdown-item(href='/account' title="Account") Settings
-            a.dropdown-item(href='/myclasses' title="Courses") My Classes
-        li.nav-item
-          a.nav-link(href='#' title="Whiteboard") Whiteboard
-        li.nav-item
-          a.nav-link(href='/groupMaker' title="Group Maker") Group Maker
-        li.nav-item.dropdown
-          a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Tracker Widgets")
-            | Tracker Widgets
-          .dropdown-menu
-            a.dropdown-item(href='#' title="Material Planner") Material Planner
-            a.dropdown-item(href='/attendance' title="Attendance") Attendance
-            a.dropdown-item(href='#' title="Student Performance") Student Performance
-        li.nav-item.dropdown
-          a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Feedback Widgets")
-            | Feedback Widgets
-          .dropdown-menu
-            a.dropdown-item(href='#' title="Feedback Mailer") Feedback Mailer
-            a.dropdown-item(href='#' title="Anonymous Feedback") Anonymous Feedback
-        li.nav-item
-          a.nav-link(href="/logout" title="Logout") Logout
-      else
-        li.nav-item
-          a.nav-link(href='/' title="Home")
-            | Home
-        li.nav-item
-          a.nav-link(href="/login" title="Login") Login
-        li.nav-item
-          a.nav-link(href="/register" title="Register") Register        
+      img(width="200px" src='/images/CCv3.png' alt='Classroom Companion Logo' title="Classroom Companion Home Page")
+    // Navbar button when in mobile
+    button.navbar-toggler(type="button" data-toggle="collapse", data-target="#collapsible-nav")
+      span.navbar-toggler-icon
+
+    div.collapse.navbar-collapse(id="collapsible-nav")
+      ul.nav.navbar-nav.ml-auto
+        if (username && username !== '')
+          li.nav-item
+            a.nav-link(href='/' title="Home")
+              | Home
+          li.nav-item.dropdown
+            a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Account")
+              | Account
+            .dropdown-menu.dropdown-menu--animate
+              a.dropdown-item(href='/account' title="Account") Settings
+              a.dropdown-item(href='/myclasses' title="Courses") My Classes
+          li.nav-item
+            a.nav-link(href='#' title="Whiteboard") Whiteboard
+          li.nav-item
+            a.nav-link(href='/groupMaker' title="Group Maker") Group Maker
+          li.nav-item.dropdown
+            a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Tracker Widgets")
+              | Tracker Widgets
+            .dropdown-menu.dropdown-menu--animate
+              a.dropdown-item(href='#' title="Material Planner") Material Planner
+              a.dropdown-item(href='/attendance' title="Attendance") Attendance
+              a.dropdown-item(href='#' title="Student Performance") Student Performance
+          li.nav-item.dropdown
+            a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Feedback Widgets")
+              | Feedback Widgets
+            .dropdown-menu.dropdown-menu--animate
+              a.dropdown-item(href='#' title="Feedback Mailer") Feedback Mailer
+              a.dropdown-item(href='#' title="Anonymous Feedback") Anonymous Feedback
+          li.nav-item
+            a.nav-link(href="/logout" title="Logout") Logout
+        else
+          li.nav-item
+            a.nav-link(href='/' title="Home")
+              | Home
+          li.nav-item
+            a.nav-link(href="/login" title="Login") Login
+          li.nav-item
+            a.nav-link(href="/register" title="Register") Register        
 block content
-// Page Content

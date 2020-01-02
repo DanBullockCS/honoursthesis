@@ -14,10 +14,12 @@ $(document).ready(function () {
   });
 
 
-  // show attendance sheet if they are making a new one
+  // Show attendance sheet if they are making a new one
   $('#new-sheet-btn').click(function () {
     // Show the attendance sheet
     $('#attendance-sheet').css('display', 'block');
+    // Scroll to the attendance sheet
+    $([document.documentElement, document.body]).animate({ scrollTop: $("#attendance-sheet").offset().top }, 750);
     // Add date to the datelist in the backend
     $.ajax({
       url: "/addingNewAttendanceSheet",
@@ -35,15 +37,22 @@ $(document).ready(function () {
       .text(dateEntered.toString().substr(0, 16));
   });
 
-  // show attendance sheet if they are editing an old one
+  // Show attendance sheet if they are editing an old one
   $('#previous-sheets').change(function () {
     $('#attendance-sheet').css('display', 'block');
+    // Scroll to the attendance sheet
+    $([document.documentElement, document.body]).animate({ scrollTop: $("#attendance-sheet").offset().top }, 750);
 
 
   });
 
   $("#users-classes").change(function () {
     selectedClass = $(this).children("option:selected").val();
+    $('#sheetsClassName').text(selectedClass);
+    // Clear the dates from the other classes and add the "select an attendance sheet" prompt
+    $('#previous-sheets').children().remove().end()
+      .append('<option class="disabled selected value" style="display: none;"> -- select an attendance sheet -- </option>');
+    
     $('#previous-sheets-div').css('display', 'block');
     $('#enter-date-div').css('display', 'block');
 

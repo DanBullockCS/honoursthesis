@@ -16,21 +16,23 @@ block content
         if (courseName)
           each course in courseName
             option= course
-      br
       div(id="previous-sheets-div", style="display: none;")
+        hr
         label(for="previous-sheets") View Previous Attendance Sheets:
         select(class="form-control" id="previous-sheets")
           option.disabled.selected.value(id="disabled-option-prev" style="display: none;") -- select an attendance sheet --
           if (dateList)
             each date in dateList
               option= date
-        br
+        hr
       div(id="enter-date-div", style="display: none;")
-        label(for="enter-attend-date") Enter Today's Date:
+        b Create New Sheet
+        br
+        label(for="enter-attend-date") Enter Date:
         input.form-control(type='date',name='enter-attend-date',id="enter-attend-date")
         br
-      a.btn.btn-success.text-white.ml-1.float-right.disabled(aria-label="Right Align" id="new-sheet-btn") New Attendance Sheet 
-        i.fa.fa-plus(aria-hidden="true")
+        a.btn.btn-success.text-white.ml-1.float-right.disabled(aria-label="Right Align" id="new-sheet-btn") New Attendance Sheet 
+          i.fa.fa-plus(aria-hidden="true")
       br
       br
     // Attendance Sheet
@@ -41,6 +43,7 @@ block content
             tr
               th Attendance Sheet for:
               th(colspan='3', id="current-date")
+              th(id="sheetsClassName")
           tbody
             tr
               td Jim
@@ -58,6 +61,9 @@ block content
                 button.btn.btn-outline-secondary(id="abse2", onclick="setAttendance(this.id)") Absent
               td
                 button.btn.btn-outline-secondary(id="late2", onclick="setAttendance(this.id)") Late
-        a.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="save-btn") Save 
-          i.fas.fa-save(aria-hidden="true")    
-            
+        a.btn.btn-danger.text-white.ml-1.float-right(aria-label="Right Align" id="delete-sheet-btn") Delete Sheet 
+          i.fa.fa-trash(aria-hidden="true") 
+        a.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="save-sheet-btn") Save Sheet 
+          i.fa.fa-save(aria-hidden="true") 
+  br
+  br

@@ -17,15 +17,30 @@ a.nav-link:after {
   -webkit-transition: -webkit-transform .2s ease-in-out;
          transition:         transform .2s ease-in-out;
 }
-li.nav-item:hover {
-  background: #003C71;
+ul.nav a:hover { 
+  background-color: #003C71;
   border-radius: 5%;
+  color: #fff;
 }
-li.nav-item {
-  background: #222222;
-  -webkit-transition: -webkit-background .2s ease-in-out;
-         transition:         background .2s ease-in-out;
+.dropdown-menu--animate.collapsing { display: block; }
+.dropdown-menu--animate {
+  opacity: 0.8;
+  height: 0;
+  display: block;
+  transition: all 0.2s;
+  overflow: hidden;
+  transform-origin: top;
+  transform: scale(1,0);
 }
+.dropdown-menu--animate.show {
+  opacity: 1;
+  height: auto;
+  transition: all 0.2s;
+  transform: scale(1);
+}
+div.dropdown-menu { background-color: #222222; }
+a.dropdown-item { color: #fff; }
+.navbar-toggler { border: none; }
 
 /* Make sure user cannot select break tags */
 br { user-select: none; }
