@@ -17,9 +17,17 @@ a.nav-link:after {
   -webkit-transition: -webkit-transform .2s ease-in-out;
          transition:         transform .2s ease-in-out;
 }
-ul.nav a:hover { 
+@media (max-width:575px) {
+ul.nav a {
+  transition: padding .2s linear;
+}
+ul.nav a:hover {
+  padding: 10px;
+}
+}
+ul.nav a:hover {
   background-color: #003C71;
-  border-radius: 5%;
+  border-radius: 10px;
   color: #fff;
 }
 .dropdown-menu--animate.collapsing { display: block; }

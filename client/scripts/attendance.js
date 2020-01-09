@@ -1,40 +1,50 @@
 $(document).ready(function () {
-  var dateEntered, selectedClass, dateList;
+  var dateEntered, selectedClass, dateList, selectedSheet;
 
   // New Attendance Sheet button 
   $("#enter-attend-date").change(function () {
     let input = this.value;
-    dateEntered = new Date(input.replace(/-/g, '\/')); // Had to replace - with / due to date format issues
+    dateEntered = new Date(input.replace(/-/g, '\/')); // Had to replace '-' with '/' due to date format issues
     dateEntered = dateEntered.toString().substr(0, 16);
     $('#new-sheet-btn').removeClass("disabled");
     if (dateEntered == 'Invalid Date') {
       $('#new-sheet-btn').addClass("disabled");
     }
-    $('#current-date').text(dateEntered);
   });
-
 
   // Show attendance sheet if they are making a new one
   $('#new-sheet-btn').click(function () {
-    // Show the attendance sheet
-    $('#attendance-sheet').css('display', 'block');
-    // Scroll to the attendance sheet
-    $([document.documentElement, document.body]).animate({ scrollTop: $("#attendance-sheet").offset().top }, 750);
-    // Add date to the datelist in the backend
-    $.ajax({
-      url: "/addingNewAttendanceSheet",
-      method: "POST",
-      data: {
-        "courseName": selectedClass,
-        "dateEntered": dateEntered
-      }
-    });
-    // Add the date to the select list
-    var select = $('#previous-sheets');
-    var optionDate = $('<option/>')
-      .addClass('value')
-      .appendTo(select)
-      .text(dateEntered.toString().substr(0, 16));
+    // Add date to the datelist in the backend if it already doesn't exist
+    if (!$('#previous-sheets option:contains(' + dateEntered + ')').length) {
+      // Show the attendance sheet
+      $('#attendance-sheet').css('display', 'block');
+      // Scroll to the attendance sheet
+      $([document.documentElement, document.body]).animate({ scrollTop: $("#attendance-sheet").offset().top }, 750);
+      // Clear Date Input
+      $("#enter-attend-date").val("");
+      $.ajax({
+        url: "/addingNewAttendanceSheet",
+        method: "POST",
+        data: {
+          "courseName": selectedClass,
+          "dateEntered": dateEntered
+        }
+      });
+      // Add the date to the select list
+      var select = $('#previous-sheets');
+      var optionDate = $('<option/>')
+        .addClass('value')
+        .appendTo(select)
+        .attr('selected', 'true')
+        .text(dateEntered.toString().substr(0, 16));
+        // Set the date in the attendance sheet
+        selectedSheet = optionDate.text();
+        $('#current-date').text(selectedSheet);
+    // Show modal saying: "There is already a sheet for that date"
+    } else {
+      $('#error-existing-sheet-modal').modal('show');
+    }
+
   });
 
   // Show attendance sheet if they are editing an old one
@@ -42,8 +52,8 @@ $(document).ready(function () {
     $('#attendance-sheet').css('display', 'block');
     // Scroll to the attendance sheet
     $([document.documentElement, document.body]).animate({ scrollTop: $("#attendance-sheet").offset().top }, 750);
-
-
+    selectedSheet = $("#previous-sheets option:selected").text();
+    $('#current-date').text(selectedSheet);
   });
 
   $("#users-classes").change(function () {
@@ -52,7 +62,7 @@ $(document).ready(function () {
     // Clear the dates from the other classes and add the "select an attendance sheet" prompt
     $('#previous-sheets').children().remove().end()
       .append('<option class="disabled selected value" style="display: none;"> -- select an attendance sheet -- </option>');
-    
+
     $('#previous-sheets-div').css('display', 'block');
     $('#enter-date-div').css('display', 'block');
 
@@ -83,7 +93,13 @@ function buildAttendanceSheet() {
 
 }
 
+function deleteSheet() {
+  // Clear the sheet and delete the actual data in the backend
+}
 
+//
+// TODO: Hard coded for now
+//
 function setAttendance(id) {
   let attendance = id.substr(0, 4); // pres, abse, or late 
   let idNum = id.substr(4);         // Get the id number of the three buttons

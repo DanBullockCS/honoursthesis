@@ -1,8 +1,8 @@
 extends main
 
 block content
-  append head 
-     script(language='JavaScript' type='text/javascript' src='/scripts/courses.js')
+  append head
+    script(language='JavaScript' type='text/javascript' src='/scripts/courses.js')
   br
   if (errorMessage)
     div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')= errorMessage

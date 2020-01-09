@@ -165,8 +165,7 @@ app.post('/processRegistration', function (request, response) {
 /**************** MyCourses page ****************/
 app.get('/myclasses', function (request, response) {
    // User not logged in redirect them
-   // TODO make routes like this, seems deprecated right now
-   //if (request.body.username == '') { response.redirect('/'); }
+   if (!request.session.username) { response.redirect("/"); }
 
    Course.find({ ownerName: request.session.username }).then(function (results) {
       var courseNames = [];
@@ -234,6 +233,9 @@ app.post('/addingStudent', async function (request, response) {
 
 /**************** Account Page ****************/
 app.get('/account', function (request, response) {
+   // User not logged in redirect them
+   if (!request.session.username) { response.redirect("/"); }
+
    User.find({ username: username }).then(function (results) {
       username = results[0].username;
       email = results[0].email;
@@ -274,6 +276,9 @@ app.post('/createClass', function (request, response) {
 
 /**************** Attendance Page ****************/
 app.get('/attendance', function (request, response) {
+   // User not logged in redirect them
+   if (!request.session.username) { response.redirect("/"); }
+
    Course.find({ ownerName: request.session.username }).then(function (results) {
       var courseNames = [];
       for (i = 0; i < results.length; i++) {
@@ -313,6 +318,9 @@ app.post('/addingNewAttendanceSheet', async function (request, response) {
 /************************************************/
 
 app.get('/groupMaker', function (request, response) {
+   // User not logged in redirect them
+   if (!request.session.username) { response.redirect("/"); }
+
    response.render('groupMaker', {
       title: 'Group Maker'
    });
