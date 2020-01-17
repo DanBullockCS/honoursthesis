@@ -19,7 +19,7 @@ block content
       div(id="previous-sheets-div", style="display: none;")
         hr
         label(for="previous-sheets") View Previous Attendance Sheets:
-        select(class="form-control" id="previous-sheets")
+        select(class="form-control" id="previous-sheets" name="previous-sheets")
           option.disabled.selected.value(id="disabled-option-prev" style="display: none;") -- select an attendance sheet --
           if (dateList)
             each date in dateList
@@ -44,26 +44,11 @@ block content
               th Attendance Sheet for:
               th(colspan='3', id="current-date")
               th(id="sheetsClassName")
-          tbody
-            tr
-              td Jim
-              td
-                button.btn.btn-outline-secondary(id="pres1", onclick="setAttendance(this.id)") Present
-              td
-                button.btn.btn-outline-secondary(id="abse1", onclick="setAttendance(this.id)") Absent
-              td
-                button.btn.btn-outline-secondary(id="late1", onclick="setAttendance(this.id)") Late
-            tr
-              td Steve
-              td
-                button.btn.btn-outline-secondary(id="pres2", onclick="setAttendance(this.id)") Present
-              td
-                button.btn.btn-outline-secondary(id="abse2", onclick="setAttendance(this.id)") Absent
-              td
-                button.btn.btn-outline-secondary(id="late2", onclick="setAttendance(this.id)") Late
-        button.btn.btn-danger.text-white.ml-1.float-right(aria-label="Right Align" data-toggle="modal" data-target="#delete-modal" id="delete-sheet-btn") Delete Sheet 
+          tbody(id="sheet-body")
+          
+        button.btn.btn-danger.text-white.ml-1.float-right(aria-label="Right Align" data-toggle="modal" data-target="#delete-modal" id="delete-sheet-btn" onclick="showDeleteSheetMessage()") Delete Sheet 
           i.fa.fa-trash(aria-hidden="true")
-        button.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="save-sheet-btn") Save Sheet 
+        button.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="save-sheet-btn" data-toggle="modal" data-target="#saved-modal" onclick="saveSheet();") Save Sheet 
           i.fa.fa-save(aria-hidden="true")
   br
   br
@@ -90,7 +75,18 @@ block content
           button.close(type='button' data-dismiss='modal' aria-label='Close')
           span(aria-hidden='true') &times;
         .modal-body
-          p Are you sure you want to delete this attendance sheet?
+          p(id="delete-sheet-message")
         .modal-footer
           button.btn.btn-danger(type='button' data-dismiss='modal' id="confirm-delete-class-btn" onclick="deleteSheet();") Delete
           button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
+
+  // Saved Sheet Modal
+  .modal.fade(tabindex='-3' role='dialog' id="saved-modal")
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title(id="saved-sheet-message")
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Close

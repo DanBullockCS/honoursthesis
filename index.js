@@ -65,7 +65,7 @@ let courseSchema = new Schema({
    courseName: String,
    studentList: [],
    dateList: [],
-   attendanceList: [],
+   attendanceList: [[]],
 }, {
    collection: 'courses'
 });
@@ -298,7 +298,7 @@ app.post('/reloadAttendanceSheet', function (request, response) {
       var sList = results[0].studentList;
       var dList = results[0].dateList;
       var aList = results[0].attendanceList;
-      // Pass studentList back to front end
+      // Pass lists back to the front end
       response.json({
          studentList: sList,
          dateList: dList,
@@ -308,13 +308,42 @@ app.post('/reloadAttendanceSheet', function (request, response) {
 });
 
 app.post('/addingNewAttendanceSheet', async function (request, response) {
-   var cName = request.body.courseName;
-   var dateEntered = request.body.dateEntered;
+   let cName = request.body.courseName;
+   let dateEntered = request.body.dateEntered;
 
    const doc = await Course.findOne({ courseName: cName });
    doc.dateList.push(dateEntered); // adding the entered date
    await doc.save();
 });
+
+app.post('/deleteSheet', async function (request, response) {
+   let sClass = request.body.selectedClass;
+   let sDate = request.body.sheetDate;
+
+   const doc = await Course.findOne({ courseName: sClass });
+   doc.dateList.splice(doc.dateList.indexOf(sDate), 1);
+   await doc.save();
+});
+
+app.post('/saveSheet', async function (request, response) {
+   let sClass = request.body.courseName;
+   let sDate = request.body.sheetDate;
+   let sAttendances = JSON.parse(request.body.sheetAttendances);
+
+   const doc = await Course.findOne({ courseName: sClass });
+   // Find the index of the selectedDate
+   let index = 0;
+   for (let i = 0; i < doc.dateList.length; i++) {
+      if (doc.dateList[i] == sDate) { index = i; }
+   }
+   
+   // Use that dates index to replace the default attendance in the attendance list
+   for (let i = 0; i < sAttendances.aList.length; i++) {
+      doc.attendanceList.splice(index, 1, sAttendances.aList);
+   }
+   await doc.save();
+});
+
 /************************************************/
 
 app.get('/groupMaker', function (request, response) {
