@@ -346,6 +346,7 @@ app.post('/saveSheet', async function (request, response) {
 
 /************************************************/
 
+/**************** GroupMaker Page ****************/
 app.get('/groupMaker', function (request, response) {
    // User not logged in redirect them
    if (!request.session.username) { response.redirect("/"); }
@@ -354,6 +355,21 @@ app.get('/groupMaker', function (request, response) {
       title: 'Group Maker'
    });
 });
+
+/************************************************/
+
+/**************** Whiteboard Page ****************/
+app.get('/whiteboard', function (request, response) {
+   // User not logged in redirect them
+   if (!request.session.username) { response.redirect("/"); }
+
+   // response.render('whiteboard', {
+   //    title: 'Whiteboard'
+   // });
+   response.sendFile(__dirname + "/views/whiteboard.html");
+});
+
+/************************************************/
 
 app.get('/logout', function (request, response) {
    request.session.username = '';
