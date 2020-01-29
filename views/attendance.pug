@@ -16,7 +16,7 @@ block content
         if (courseName)
           each course in courseName
             option= course
-      div(id="previous-sheets-div", style="display: none;")
+      div(id="previous-sheets-div" style="display: none;")
         hr
         label(for="previous-sheets") View Previous Attendance Sheets:
         select(class="form-control" id="previous-sheets" name="previous-sheets")
@@ -25,7 +25,7 @@ block content
             each date in dateList
               option= date
         hr
-      div(id="enter-date-div", style="display: none;")
+      div(id="enter-date-div" style="display: none;")
         b Create New Sheet
         br
         label(for="enter-attend-date") Enter Date:
@@ -42,10 +42,10 @@ block content
           thead.thead-dark
             tr
               th Attendance Sheet for:
-              th(colspan='3', id="current-date")
+              th(colspan='3' id="current-date")
               th(id="sheetsClassName")
           tbody(id="sheet-body")
-          
+
         button.btn.btn-danger.text-white.ml-1.float-right(aria-label="Right Align" data-toggle="modal" data-target="#delete-modal" id="delete-sheet-btn" onclick="showDeleteSheetMessage()") Delete Sheet 
           i.fa.fa-trash(aria-hidden="true")
         button.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="save-sheet-btn" data-toggle="modal" data-target="#saved-modal" onclick="saveSheet();") Save Sheet 

@@ -2,81 +2,81 @@ extends main
 
 block content
   append head 
-     script(language='JavaScript' type='text/javascript' src='/scripts/groupmaker.js')
-     br
-     div(class='errorMessage')= errorMessage
-     h1.pagetitle= title
-     br
-     .container
-       // Group Display
-       div.stage.shadow
-         table.table(id="group-table")
-           tr
-             th Group 1:
-             td Kyle
-           tr
-             th Group 2:
-             td Edward
-           tr
-             th Group 3:   
-             td Vince
-           tr
-             th Group 4:
-             td Ingrid
-           tr
-             th Group 5:
-             td Nancy
-             
-       // Settings
-       h2(style="text-align: center") Group Settings:
-       label(for="group-size") Max Group Size:
-       input.form-control.number-input(type="number", id="group-size", name="group-num" min="1" value="1")
-       label(for="student-list") Student Names (Enter each on their own line):
-       // Textarea with prefilled names
-       textarea.form-control(id="student-list", rows="5",style="overflow-y:scroll;") Kyle&#13;&#10;Edward&#13;&#10;Vince&#13;&#10;Ingrid&#13;&#10;Nancy
-       
-       // Buttons
-       br
-       div.row
-         div.col-md
-           a.btn.btn-info.text-white.mr-1(aria-label="Left Align" id="reshuffle-btn" onclick="reshuffle();") Reshuffle Group 
+    script(language='JavaScript' type='text/javascript' src='/scripts/groupmaker.js')
+    br
+    div(class='errorMessage')= errorMessage
+    h1.pagetitle= title
+    br
+    .container
+      // Group Display
+      div.stage.shadow
+        table.table(id="group-table")
+          tr
+            th Group 1:
+            td Kyle
+          tr
+            th Group 2:
+            td Edward
+          tr
+            th Group 3:   
+            td Vince
+          tr
+            th Group 4:
+            td Ingrid
+          tr
+            th Group 5:
+            td Nancy
+
+      // Settings
+      h2(style="text-align: center") Group Settings:
+      label(for="group-size") Max Group Size:
+      input.form-control.number-input(type="number" id="group-size" name="group-num" min="1" value="1")
+      label(for="student-list") Student Names (Enter each on their own line):
+      // Textarea with prefilled names
+      textarea.form-control(id="student-list" rows="5" style="overflow-y:scroll;") Kyle&#13;&#10;Edward&#13;&#10;Vince&#13;&#10;Ingrid&#13;&#10;Nancy
+
+      // Buttons
+      br
+      div.row
+        div.col-md
+          a.btn.btn-info.text-white.mr-1(aria-label="Left Align" id="reshuffle-btn" onclick="reshuffle();") Reshuffle Group 
             i.fa.fa-random(aria-hidden="true")
-           a.btn.btn-info.text-white.mr-1(aria-label="Left Align" id="clear-btn" onclick="clearList();") Clear List 
+          a.btn.btn-info.text-white.mr-1(aria-label="Left Align" id="clear-btn" onclick="clearList();") Clear List 
             i.fa.fa-eraser(aria-hidden="true")
-         div.col-md
-           a.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="general-help" data-toggle="modal" data-target="#help-modal") How To Use 
+        div.col-md
+          a.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="general-help" data-toggle="modal" data-target="#help-modal") How To Use 
             i.fa.fa-question-circle(aria-hidden="true")
-           a.btn.btn-success.text-white.float-right(aria-label="Right Align" id="list-help" data-toggle="modal" data-target="#excel-modal") Excel Help 
+          a.btn.btn-success.text-white.float-right(aria-label="Right Align" id="list-help" data-toggle="modal" data-target="#excel-modal") Excel Help 
             i.fa.fa-question-circle(aria-hidden="true")
-       br
-       br
-     
-     // Help Modals
-     .modal.fade(tabindex='-1' role='dialog' id="help-modal")
-       .modal-dialog(role='document')
-         .modal-content
-           .modal-header
-             h5.modal-title How to use Group Maker
-             button.close(type='button' data-dismiss='modal' aria-label='Close')
-               span(aria-hidden='true') &times;
-           .modal-body
-             p The Group Maker is a great way to randomly generate groups of students for class projects, seating arrangements, or anything else you can think of.
-             p To use it, just paste in a list of students seperated by a new line in the "student names" box.
-             p You may also choose from your <b>class list</b>, create a class on your <a href="/account#CreateClass">settings page</a>.
-             h5 Find other uses for group maker
-             hr
-             p The Group Maker doesn't have to be just for student groups. For example, try writing all the tasks you have to get done that day and let the program randomly sort them. Try to think of other ways to use the program!
-           .modal-footer
-             button.btn.btn-secondary(type='button' data-dismiss='modal') Close
-     .modal.fade(tabindex='-1' role='dialog' id="excel-modal")
-       .modal-dialog(role='document')
-         .modal-content
-           .modal-header
-             h5.modal-title Inserting Student List as an Excel Sheet
-             button.close(type='button' data-dismiss='modal' aria-label='Close')
-               span(aria-hidden='true') &times;
-           .modal-body
-             p You can paste student names directly from a spreadsheet (e.g. Excel or Google Sheets). Just copy the cells that have the names and they will automatically be seperated by a new line.
-             img.img-fluid(src='/images/GroupMakerInstructions.png' alt='Group Maker Excel Instructions' style="max-height:250px;")
-           .modal-footer
-             button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+      br
+      br
+
+    // Help Modals
+    .modal.fade(tabindex='-1' role='dialog' id="help-modal")
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5.modal-title How to use Group Maker
+            button.close(type='button' data-dismiss='modal' aria-label='Close')
+              span(aria-hidden='true') &times;
+          .modal-body
+            p The Group Maker is a great way to randomly generate groups of students for class projects, seating arrangements, or anything else you can think of.
+            p To use it, just paste in a list of students seperated by a new line in the "student names" box.
+            p You may also choose from your <b>class list</b>, create a class on your <a href="/account#CreateClass">settings page</a>.
+            h5 Find other uses for group maker
+            hr
+            p The Group Maker doesn't have to be just for student groups. For example, try writing all the tasks you have to get done that day and let the program randomly sort them. Try to think of other ways to use the program!
+          .modal-footer
+            button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+    .modal.fade(tabindex='-1' role='dialog' id="excel-modal")
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5.modal-title Inserting Student List as an Excel Sheet
+            button.close(type='button' data-dismiss='modal' aria-label='Close')
+              span(aria-hidden='true') &times;
+          .modal-body
+            p You can paste student names directly from a spreadsheet (e.g. Excel or Google Sheets). Just copy the cells that have the names and they will automatically be seperated by a new line.
+            img.img-fluid(src='/images/GroupMakerInstructions.png' alt='Group Maker Excel Instructions' style="max-height:250px;")
+          .modal-footer
+            button.btn.btn-secondary(type='button' data-dismiss='modal') Close

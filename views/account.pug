@@ -1,6 +1,8 @@
 extends main
 
 block content
+  append head
+    script(language='JavaScript' type='text/javascript' src='/scripts/account.js')
   br
   if (errorMessage)
     div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')= errorMessage
@@ -14,26 +16,26 @@ block content
     a.btn.btn-primary(href='/myclasses') View/Edit Classes
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
     h4(id="CreateClass") Create a new class:
-    form(name='create_class_form', action='/createClass', method='post')
+    form(name='create-class-form' action='/createClass' method='post')
       div.form-group
-        label(for="enter_class_name") Enter a <b>distinctive</b> name for your class:
-        input.form-control(type='text',name='enter_class_name',id="enter_class_name")
+        label(for="enter-class-name") Enter a <b>distinctive</b> name for your class:
+        input.form-control(type='text' name='enter-class-name' id="enter-class-name")
       div.form-group
         label(for="paste-or-excel") Enter your student's names as:
         select(class="form-control" id="paste-or-excel")
           option Paste list (Seperated by a new line for each student)
           option Excel spreadsheet (.xlsx)
       div.form-group(id="paste-input")
-        label(for="enter_student_names") Paste all the names of the students in the class:
+        label(for="enter-student-names") Paste all the names of the students in the class:
         small.form-text.text-muted Make sure to paste each student's name on a new line
-        textarea.form-control(name="enter_student_names", id="enter_student_names",rows="5",style="overflow-y:scroll;")
-      div.form-group(id="excel-input", style='display: none;')
-        input.form-control-file(type="file", id="upload_spreadsheet", accept=".xls,.xlsx")
-        label(for="upload_spreadsheet") Upload a .xlsx spreadsheet with all your student names on a new line 
-      button.btn.btn-primary.text-white(type='submit') Create Class
+        textarea.form-control(name="enter-student-names" id="enter-student-names" rows="5" style="overflow-y:scroll;")
+      div.form-group(id="excel-input" style='display: none;')
+        input.form-control-file(type="file" id="upload-spreadsheet" accept=".xls,.xlsx")
+        label(for="upload-spreadsheet") Upload a .xlsx spreadsheet with all your student names on a new line 
+      button.btn.btn-primary.text-white(id='create-class-button' type='submit' disabled) Create Class
       a.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="general-help" data-toggle="modal" data-target="#help-modal") Uploading students as spreadsheet (.xlsx) 
         i.fa.fa-question-circle(aria-hidden="true")
-          
+
   // Help modal for .xlsx
   .modal.fade(tabindex='-1' role='dialog' id="help-modal")
     .modal-dialog(role='document')

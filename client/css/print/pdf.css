@@ -1,13 +1,13 @@
+* {
+	-webkit-print-color-adjust: exact;
+}
+
 /**
  * This stylesheet is used to print reveal.js
  * presentations to PDF.
  *
  * https://github.com/hakimel/reveal.js#pdf-export
  */
-
-* {
-	-webkit-print-color-adjust: exact;
-}
 
 body {
 	margin: 0 auto !important;

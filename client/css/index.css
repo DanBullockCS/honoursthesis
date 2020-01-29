@@ -18,12 +18,12 @@ a.nav-link:after {
          transition:         transform .2s ease-in-out;
 }
 @media (max-width:575px) {
-ul.nav a {
-  transition: padding .2s linear;
-}
-ul.nav a:hover {
-  padding: 10px;
-}
+  ul.nav a {
+    transition: padding .2s linear;
+  }
+  ul.nav a:hover {
+    padding: 10px;
+  }
 }
 ul.nav a:hover {
   background-color: #003C71;
@@ -49,6 +49,7 @@ ul.nav a:hover {
 div.dropdown-menu { background-color: #222222; }
 a.dropdown-item { color: #fff; }
 .navbar-toggler { border: none; }
+
 
 /* Make sure user cannot select break tags */
 br { user-select: none; }

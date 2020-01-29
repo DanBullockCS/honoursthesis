@@ -96,9 +96,9 @@ app.post('/processLogin', function (request, response) {
 
    User.find({ username: username }).then(function (results) {
       if (results.length != 1) {
-         console.log('login: no user found');
          // Error logging in - no such user
          response.render('login', {
+            username: "", // Make sure the navbar doesn't show logged in features
             errorMessage: 'Login Incorrect'
          });
       } else {
@@ -130,7 +130,7 @@ app.post('/processLogin', function (request, response) {
 
 app.get('/register', function (request, response) {
    response.render('register', {
-      title: 'Register'
+      title: 'Register',
    });
 });
 
@@ -363,11 +363,20 @@ app.get('/whiteboard', function (request, response) {
    // User not logged in redirect them
    if (!request.session.username) { response.redirect("/"); }
 
-   // response.render('whiteboard', {
-   //    title: 'Whiteboard'
-   // });
-   response.sendFile(__dirname + "/views/whiteboard.html");
+   response.render('whiteboard', {
+      title: 'Whiteboard'
+   });
+   
 });
+
+/**************** Presentation Page ****************/
+app.get('/presentation', function (request, response) {
+   // User not logged in redirect them
+   if (!request.session.username) { response.redirect("/"); }
+   response.sendFile(__dirname + "/views/presentation.html");
+});
+
+
 
 /************************************************/
 

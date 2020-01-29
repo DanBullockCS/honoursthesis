@@ -1,0 +1,11 @@
+extends main
+
+block content
+  append head
+    br
+    div(class='errorMessage')= errorMessage
+    h1.pagetitle= title
+    br
+    .container
+      p Put things here
+      a(href="/presentation") Your Presentation
