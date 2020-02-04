@@ -2,10 +2,48 @@ extends main
 
 block content
   append head
+    script(language='JavaScript' type='text/javascript' src='/scripts/whiteboard.js')
+  br
+  div(class='errorMessage')= errorMessage
+  h1.pagetitle= title
+  br
+  .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+    ul <b>Todo List</b>
+      li End up showing instructions on how to upload your slides
+      li Show button to upload slides
+      li Show dropdown to display list of your slides
+      li With dropdown have delete/create slides button (Store slides as html in db?)
+    //- Custom checkbox
+    label.checktainer
+      p.checktainerLabel View Presentation as PDF?
+      input(type="checkbox" id="pdfCheckbox")
+      span.checkmark
+  
+    a.btn.btn-primary.text-white.ml-1.float-left(aria-label="Left Align" href="/presentation" id="openSlidesBtn" target="_blank") Open Slides 
+      i.fas.fa-desktop(aria-hidden="true")
+    a.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="pdf-help" data-toggle="modal" data-target="#help-modal") Exporting slides as PDF 
+        i.fa.fa-question-circle(aria-hidden="true")
     br
-    div(class='errorMessage')= errorMessage
-    h1.pagetitle= title
     br
-    .container
-      p Put things here
-      a(href="/presentation") Your Presentation
+
+  //- Help modal for saving as pdf
+  .modal.fade(tabindex='-1' role='dialog' id="help-modal")
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title How to export Whiteboard Slides as PDF
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+        .modal-body
+          p You can export your slides as a pdf by checking the "<b>View Presentation as PDF</b> checkbox and <b>opening your presentation</b>."
+          p It should open up with "?print-pdf" in the url, follow these instructions and you can export to pdf. To make the pdf slides look their best follow these instructions:
+          ol
+            li Open the in-browser print dialog (CTRL/CMD+P).
+            li Change the <b>Destination</b> setting to <b>Save as PDF</b>.
+            li Change the <b>Layout</b> to <b>Landscape</b>.
+            li Change the <b>Margins</b> to <b>None</b>.
+            li Enable the <b>Background graphics</b> option.
+            li Click <b>Save</b>.
+          img.img-fluid(src='/images/exportAsPDF.png' alt='Exporting slides as pdf Instructions' style="max-height:250px;")
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Close

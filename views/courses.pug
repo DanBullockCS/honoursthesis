@@ -28,11 +28,11 @@ block content
       i.fa.fa-plus(aria-hidden="true")
     br
     br
-  // If user does not have any classes display this
+  //- If user does not have any classes display this
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(id="no-class-display" style="display: none;")
     p You have no classes! To create a class, go to the <a href="/account#CreateClass">settings page</a>.
 
-  // Delete class modal
+  //- Delete class modal
   .modal.fade(tabindex='-1' role='dialog' id="delete-modal")
     .modal-dialog(role='document')
       .modal-content
@@ -46,7 +46,7 @@ block content
           button.btn.btn-danger(type='button' data-dismiss='modal' id="confirm-delete-class-btn" onclick="deleteClass();") Delete
           button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
 
-  // Add student modal
+  //- Add student modal
   .modal.fade(tabindex='-2' role='dialog' id="addStu-modal")
     .modal-dialog(role='document')
       .modal-content

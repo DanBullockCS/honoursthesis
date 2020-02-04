@@ -35,7 +35,7 @@ block content
           i.fa.fa-plus(aria-hidden="true")
       br
       br
-    // Attendance Sheet
+    //- Attendance Sheet
     .container(id="attendance-sheet" style="display: none;")
       div.stage.shadow
         table.table(id="attendance-table")
@@ -53,7 +53,7 @@ block content
   br
   br
 
-  // Sheet already exists modal
+  //- Sheet already exists modal
   .modal.fade(tabindex='-1' role='dialog' id="error-existing-sheet-modal")
     .modal-dialog(role='document')
       .modal-content
@@ -66,7 +66,7 @@ block content
         .modal-footer
           button.btn.btn-secondary(type='button' data-dismiss='modal') Close
 
-  // Delete Sheet Modal
+  //- Delete Sheet Modal
   .modal.fade(tabindex='-2' role='dialog' id="delete-modal")
     .modal-dialog(role='document')
       .modal-content
@@ -80,7 +80,7 @@ block content
           button.btn.btn-danger(type='button' data-dismiss='modal' id="confirm-delete-class-btn" onclick="deleteSheet();") Delete
           button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
 
-  // Saved Sheet Modal
+  //- Saved Sheet Modal
   .modal.fade(tabindex='-3' role='dialog' id="saved-modal")
     .modal-dialog(role='document')
       .modal-content

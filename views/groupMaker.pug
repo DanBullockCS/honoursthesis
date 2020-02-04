@@ -8,7 +8,7 @@ block content
     h1.pagetitle= title
     br
     .container
-      // Group Display
+      //- Group Display
       div.stage.shadow
         table.table(id="group-table")
           tr
@@ -27,15 +27,15 @@ block content
             th Group 5:
             td Nancy
 
-      // Settings
+      //- Settings
       h2(style="text-align: center") Group Settings:
       label(for="group-size") Max Group Size:
       input.form-control.number-input(type="number" id="group-size" name="group-num" min="1" value="1")
       label(for="student-list") Student Names (Enter each on their own line):
-      // Textarea with prefilled names
+      //- Textarea with prefilled names
       textarea.form-control(id="student-list" rows="5" style="overflow-y:scroll;") Kyle&#13;&#10;Edward&#13;&#10;Vince&#13;&#10;Ingrid&#13;&#10;Nancy
 
-      // Buttons
+      //- Buttons
       br
       div.row
         div.col-md
@@ -51,7 +51,7 @@ block content
       br
       br
 
-    // Help Modals
+    //- Help Modals
     .modal.fade(tabindex='-1' role='dialog' id="help-modal")
       .modal-dialog(role='document')
         .modal-content

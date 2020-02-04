@@ -364,7 +364,7 @@ app.get('/whiteboard', function (request, response) {
    if (!request.session.username) { response.redirect("/"); }
 
    response.render('whiteboard', {
-      title: 'Whiteboard'
+      title: 'Whiteboard Slides'
    });
    
 });
@@ -375,8 +375,6 @@ app.get('/presentation', function (request, response) {
    if (!request.session.username) { response.redirect("/"); }
    response.sendFile(__dirname + "/views/presentation.html");
 });
-
-
 
 /************************************************/
 
