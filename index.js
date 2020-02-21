@@ -56,6 +56,7 @@ let userSchema = new Schema({
    },
    email: String,
    hashedPassword: String,
+   whiteboard: [],
 }, {
    collection: 'users'
 });
@@ -368,12 +369,22 @@ app.get('/whiteboard', function (request, response) {
    });
    
 });
+app.post('/uploadWhiteboard', function (request, response) {
+   var slides = request.body;
+   console.log(slides);
+   User.find({ username: username }).then(function (results) {
+      response.json({
+      });
+   });
+});
 
 /**************** Presentation Page ****************/
 app.get('/presentation', function (request, response) {
    // User not logged in redirect them
    if (!request.session.username) { response.redirect("/"); }
-   response.sendFile(__dirname + "/views/presentation.html");
+   response.render('presentation', {
+      title: 'Your Presentation'
+   });
 });
 
 /************************************************/

@@ -51,7 +51,7 @@ ul.nav a:hover {
   transition: all 0.2s;
   transform: scale(1);
 }
-div.dropdown-menu { background-color: #222222; }
+.dropdown-menu { background-color: #222222; }
 a.dropdown-item { color: #fff; }
 .navbar-toggler { border: none; }
 
@@ -77,7 +77,7 @@ a.dropdown-item { color: #fff; }
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 22px;
-  width: 14rem;
+  width: 19rem;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

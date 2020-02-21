@@ -3,6 +3,15 @@ extends main
 block content
   append head
     script(language='JavaScript' type='text/javascript' src='/scripts/whiteboard.js')
+    link(rel='stylesheet' href='/PPTX2HTML/css/font-awesome.min.css')
+    link(rel='stylesheet' href='/PPTX2HTML/css/pptx2html.css')
+    link(rel='stylesheet' href='/PPTX2HTML/css/nv.d3.min.css')
+    script(type='text/javascript' src='/PPTX2HTML/js/pptx2html.js')
+    script(type='text/javascript' src='/PPTX2HTML/js/jquery-1.11.3.min.js')
+    script(type='text/javascript' src='/PPTX2HTML/js/FileSaver.min.js')
+    script(type='text/javascript' src='/PPTX2HTML/js/lz-string.min.js')
+    script(type='text/javascript' src='/PPTX2HTML/js/chart/d3.min.js')
+    script(type='text/javascript' src='/PPTX2HTML/js/chart/nv.d3.min.js')
   br
   div(class='errorMessage')= errorMessage
   h1.pagetitle= title
@@ -15,28 +24,54 @@ block content
       li With dropdown have delete/create slides button (Store slides as html in db?)
     //- Custom checkbox
     label.checktainer
-      p.checktainerLabel View Presentation as PDF?
+      p.checktainerLabel Open Slides as PDF-Friendly Version?
       input(type="checkbox" id="pdfCheckbox")
       span.checkmark
-  
+    select(class="form-control" id="presentations")
+      option.disabled.selected.value(id="disabled-option" style="display: none;") -- select a presentation --
+      if (whiteboard)
+        each slide in whiteboard
+          option= slide
+    br
+    
+    .btn-group
+      .fileUpload.btn.btn-success.ml-1.float-left
+        span
+          |  Choose a PPTX file 
+        i.fas.fa-upload
+        input#uploadBtn.upload(type='file' accept='application/vnd.openxmlformats-officedocument.presentationml.presentation')
+      button.btn.btn-success.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+        span.sr-only Toggle Dropdown
+      ul.dropdown-menu
+        li#download-reveal-btn
+          a.btn.text-white(href='#')
+            |  Upload Slides
+
     a.btn.btn-primary.text-white.ml-1.float-left(aria-label="Left Align" href="/presentation" id="openSlidesBtn" target="_blank") Open Slides 
       i.fas.fa-desktop(aria-hidden="true")
     a.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="pdf-help" data-toggle="modal" data-target="#help-modal") Exporting slides as PDF 
-        i.fa.fa-question-circle(aria-hidden="true")
+      i.fa.fa-question-circle(aria-hidden="true")
+    
     br
     br
+  
+  #result_block.hidden
+    .container.col-md-7.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+      .col-md-7
+        h3 Uploaded Slides Preview:
+        #result
 
   //- Help modal for saving as pdf
   .modal.fade(tabindex='-1' role='dialog' id="help-modal")
     .modal-dialog(role='document')
       .modal-content
         .modal-header
-          h5.modal-title How to export Whiteboard Slides as PDF
+          h5.modal-title How to export Whiteboard Slides as pdf
           button.close(type='button' data-dismiss='modal' aria-label='Close')
           span(aria-hidden='true') &times;
         .modal-body
-          p You can export your slides as a pdf by checking the "<b>View Presentation as PDF</b> checkbox and <b>opening your presentation</b>."
-          p It should open up with "?print-pdf" in the url, follow these instructions and you can export to pdf. To make the pdf slides look their best follow these instructions:
+          p You can export your slides as a pdf by checking the "<b>Open Slides as PDF-Friendly Version</b> checkbox and <b>opening your presentation</b>."
+          p With the checkbox checked, follow these instructions to export as pdf:
           ol
             li Open the in-browser print dialog (CTRL/CMD+P).
             li Change the <b>Destination</b> setting to <b>Save as PDF</b>.
@@ -47,3 +82,4 @@ block content
           img.img-fluid(src='/images/exportAsPDF.png' alt='Exporting slides as pdf Instructions' style="max-height:250px;")
         .modal-footer
           button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+

@@ -72,8 +72,8 @@ try {
 
 	var theme = "chalkboard";
 	var color = [0, 0];
-	var toggleChalkboardButton = true;
-	var toggleNotesButton = true;
+	var toggleChalkboardButton = false;
+	var toggleNotesButton = false;
 	var transition = 800;
 
 	var readOnly = undefined;
@@ -325,7 +325,7 @@ try {
 					}
 				}
 			}
-			a.download = "chalkboard.json";
+			a.download = "yourDrawings.json";
 			var blob = new Blob( [ JSON.stringify( storage ) ], { type: "application/json"} );
 			a.href = window.URL.createObjectURL( blob );
 		} catch( error ) {
