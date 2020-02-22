@@ -13,44 +13,42 @@ block content
     script(type='text/javascript' src='/PPTX2HTML/js/chart/d3.min.js')
     script(type='text/javascript' src='/PPTX2HTML/js/chart/nv.d3.min.js')
   br
-  div(class='errorMessage')= errorMessage
+  div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')
   h1.pagetitle= title
   br
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
-    ul <b>Todo List</b>
-      li End up showing instructions on how to upload your slides
-      li Show button to upload slides
-      li Show dropdown to display list of your slides
-      li With dropdown have delete/create slides button (Store slides as html in db?)
+    label(for="presentations") Select uploaded presentations to view:
+    select(class="form-control" id="presentations")
+      option.disabled.selected.value(id="disabled-option" style="display: none;") -- select a presentation --
+      if (presentationNames)
+        each slide in presentationNames
+          option= slide
+    br
+
+    
+    label(for="uploadBtnGroup") Upload New Slides:
+    .btn-group.row.offset-md-1(id="uploadBtnGroup")
+      .fileUpload.btn.btn-primary.ml-1.float-left(id="choosePPTXButton")
+        span
+          |  Choose a PPTX file 
+          i.fas.fa-desktop(aria-hidden="true")
+        input#uploadBtn.upload(type='file' accept='application/vnd.openxmlformats-officedocument.presentationml.presentation')
+      button.btn.btn-success#download-reveal-btn.disabled(type='button' disabled="true")
+        |  Upload Slides 
+        i.fas.fa-upload(aria-hidden="true")
+    br
+    br
+    label(for="openSlidesGroup") View Slides:
     //- Custom checkbox
     label.checktainer
       p.checktainerLabel Open Slides as PDF-Friendly Version?
       input(type="checkbox" id="pdfCheckbox")
       span.checkmark
-    select(class="form-control" id="presentations")
-      option.disabled.selected.value(id="disabled-option" style="display: none;") -- select a presentation --
-      if (whiteboard)
-        each slide in whiteboard
-          option= slide
-    br
-    
-    .btn-group
-      .fileUpload.btn.btn-success.ml-1.float-left
-        span
-          |  Choose a PPTX file 
-        i.fas.fa-upload
-        input#uploadBtn.upload(type='file' accept='application/vnd.openxmlformats-officedocument.presentationml.presentation')
-      button.btn.btn-success.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-        span.sr-only Toggle Dropdown
-      ul.dropdown-menu
-        li#download-reveal-btn
-          a.btn.text-white(href='#')
-            |  Upload Slides
-
-    a.btn.btn-primary.text-white.ml-1.float-left(aria-label="Left Align" href="/presentation" id="openSlidesBtn" target="_blank") Open Slides 
-      i.fas.fa-desktop(aria-hidden="true")
-    a.btn.btn-success.text-white.ml-1.float-right(aria-label="Right Align" id="pdf-help" data-toggle="modal" data-target="#help-modal") Exporting slides as PDF 
-      i.fa.fa-question-circle(aria-hidden="true")
+    .btn-group.row.offset-md-1(id="openSlidesGroup")
+      a.btn.btn-primary.text-white(aria-label="Left Align" href="/presentation" id="openSlidesBtn" target="_blank") Open Slides 
+        i.fas.fa-desktop(aria-hidden="true")
+      a.btn.btn-success.text-white(aria-label="Right Align" id="pdf-help" data-toggle="modal" data-target="#help-modal") Exporting slides as PDF 
+        i.fa.fa-question-circle(aria-hidden="true")
     
     br
     br

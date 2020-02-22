@@ -28,7 +28,8 @@ mongoose.set('useCreateIndex', true);
 // Middleware
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
-   extended: false
+   limit: '100mb', // Limiting for uploading pptx slides
+   extended: true,
 }));
 
 // Configure Pug templating
@@ -56,7 +57,6 @@ let userSchema = new Schema({
    },
    email: String,
    hashedPassword: String,
-   whiteboard: [],
 }, {
    collection: 'users'
 });
@@ -71,8 +71,21 @@ let courseSchema = new Schema({
    collection: 'courses'
 });
 
+let presentationSchema = new Schema({
+   ownerName: String,
+   fileName: {
+      type: String,
+      unique: true,
+      index: true,
+   },
+   fileContent: String,
+}, {
+   collection: 'presentations'
+});
+
 let User = mongoose.model('user', userSchema);
 let Course = mongoose.model('course', courseSchema);
+let Presentation = mongoose.model('presentation', presentationSchema);
 
 /**************** Routes ****************/
 app.get('/', function (request, response) {
@@ -263,7 +276,7 @@ app.post('/createClass', function (request, response) {
    newCourse.save(function (error) {
       if (error) {
          response.render('account',
-            { errorMessage: '' });
+            { errorMessage: 'Error creating class, name may not be distinctive.' });
       } else {
          response.render('account', {
             title: 'Account Settings',
@@ -364,18 +377,52 @@ app.get('/whiteboard', function (request, response) {
    // User not logged in redirect them
    if (!request.session.username) { response.redirect("/"); }
 
-   response.render('whiteboard', {
-      title: 'Whiteboard Slides'
+   Presentation.find({ ownerName: username }).then(function (results) {
+      if(results.length === 0) {
+         response.render('whiteboard', {
+            title: 'Whiteboard Slides',
+            presentationNames: [],
+         });
+      } else {
+         var presentationNames = [];
+         for (i = 0; i < results.length; i++) {
+            presentationNames.push(results[i].fileName);
+         }
+         response.render('whiteboard', {
+            title: 'Whiteboard Slides',
+            presentationNames: presentationNames,
+         });
+      }
    });
    
 });
-app.post('/uploadWhiteboard', function (request, response) {
-   var slides = request.body;
-   console.log(slides);
-   User.find({ username: username }).then(function (results) {
-      response.json({
-      });
+app.post('/uploadWhiteboard', async function (request, response) {
+   var slides = request.body.html;
+   var fname = request.body.fileName;
+
+   // Saving the uploaded presentation
+   newPres = new Presentation({
+      ownerName: username,
+      fileName: fname,
+      fileContent: slides,
    });
+   newPres.save(function (error) {
+      if (error) {
+         response.json({errorMessage: 'Could not create presentation, maybe the name already exists?'});
+      } else {
+         // Loading all the users presentations
+          Presentation.find({ ownerName: username }).then(function (results) {
+            var presentationNames = [];
+            for (i = 0; i < results.length; i++) {
+               presentationNames.push(results[i].fileName);
+            }
+
+            response.json({ presentationNames: presentationNames });
+         });
+      }
+   });
+
+   
 });
 
 /**************** Presentation Page ****************/

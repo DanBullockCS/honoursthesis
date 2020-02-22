@@ -128,3 +128,8 @@ a.dropdown-item { color: #fff; }
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+/* Error Message */
+.errorMessage {
+  display: none;
+}

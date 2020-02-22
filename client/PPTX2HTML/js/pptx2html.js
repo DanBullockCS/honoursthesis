@@ -1,12 +1,10 @@
 $(document).ready(function() {
 	var fileName;
 	if (window.Worker) {
-		
 		var $result = $("#result");
 		var isDone = false;
 		
 		$("#uploadBtn").on("change", function(evt) {
-			
 			isDone = false;
 			
 			$result.html("");
@@ -134,18 +132,41 @@ $(document).ready(function() {
 				var headHtml = "<style>" + cssText + "</style>";
 				var bodyHtml = "<div id='slides' class='slides'>" + $result.html() + "</div>";
 				var html = revealPrefix + headHtml + bodyHtml;
-				var blob = new Blob([html], {type: "text/html;charset=utf-8"});
-				var fd = new FormData();
-				fd.append('fname', fileName.name);
-				fd.append('data', blob);
+				// var blob = new Blob([html], {type: "text/html;charset=utf-8"});
+				// var fd = new FormData();
+				// fd.append('fname', fileName.name);
+				// fd.append('data', blob);
+				// for (var val of fd.values()) {
+				// 	console.log(val); 
+				// }
 				//saveAs(blob, "slides.html");
-				// Instead of downloading it, save it to mongodb
+				
+				// Instead of downloading it to the client, save the html text to mongodb				
 				$.ajax({
 				  url: "/uploadWhiteboard",
 				  method: "POST",
-				  data: fd,			  
-				  processData: false,
-				  contentType: false,
+				  data: {
+					html: html,
+					fileName: fileName.name,
+				  },
+				  success: (data) => {
+					if (data.errorMessage) {
+						$('.errorMessage').css("display", "block");
+						// After 5 seconds, hide the error message div
+						setTimeout(function() {
+							$('.errorMessage').css("display", "none");
+						}, 5000);
+						$('.errorMessage').text(data.errorMessage);
+					}
+					var select = $("#presentations");
+					select.empty(); // Clear slides list
+					// Display the slide names 
+					$.each(data.presentationNames, function(i) {
+					var option = $('<option/>')
+						.appendTo(select)
+						.text(data.presentationNames[i]);
+					});
+			      }
 				});
 			});
 		});
