@@ -18,10 +18,7 @@ head
     document.getElementsByTagName( 'head' )[0].appendChild( link );
 .reveal
   //- Actual slides code
-  div.slides
-    section This is
-    section Reveal JS
-    section on Classroom Companion
+  div.slides !{fileContent}
 script(src='/scripts/reveal.js')
 script.
   var isPdf = false; // A quick check so that buttons do not show up on pdf friendly version

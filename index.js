@@ -396,6 +396,8 @@ app.get('/whiteboard', function (request, response) {
    });
    
 });
+
+// Uploading a new slideshow
 app.post('/uploadWhiteboard', async function (request, response) {
    var slides = request.body.html;
    var fname = request.body.fileName;
@@ -407,31 +409,41 @@ app.post('/uploadWhiteboard', async function (request, response) {
       fileContent: slides,
    });
    newPres.save(function (error) {
-      if (error) {
-         response.json({errorMessage: 'Could not create presentation, maybe the name already exists?'});
-      } else {
-         // Loading all the users presentations
+          // Loading all the users presentations
           Presentation.find({ ownerName: username }).then(function (results) {
             var presentationNames = [];
             for (i = 0; i < results.length; i++) {
                presentationNames.push(results[i].fileName);
             }
-
-            response.json({ presentationNames: presentationNames });
+            if (error) {
+               response.json({
+                  errorMessage: 'Could not create presentation, file name already exists in your presentations',
+                  presentationNames: presentationNames,
+               });
+            } else {
+               response.json({
+                  presentationNames: presentationNames,
+               });
+            }
          });
-      }
-   });
-
-   
+   });   
 });
+
+/***************************************************/
 
 /**************** Presentation Page ****************/
 app.get('/presentation', function (request, response) {
    // User not logged in redirect them
    if (!request.session.username) { response.redirect("/"); }
-   response.render('presentation', {
-      title: 'Your Presentation'
+   var fileName = request.query.name;
+
+   Presentation.findOne({ ownerName: username, fileName: fileName }).then(function (results) {
+      response.render('presentation', {
+         title: 'Your Presentation',
+         fileContent: results.fileContent,
+      });
    });
+   
 });
 
 /************************************************/

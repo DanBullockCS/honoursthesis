@@ -1,10 +1,13 @@
 $(document).ready(function() {
+    var selectedPresentation;
+
     // Changing the url of the button based on checkbox
     $("#pdfCheckbox").change (function() {
+        let _href = $("#openSlidesBtn").attr("href");
         if ($(this).is(':checked')) {
-            $("#openSlidesBtn").attr("href", "presentation/?print-pdf");
+            $("#openSlidesBtn").attr("href", _href + "?print-pdf");
         } else {
-            $("#openSlidesBtn").attr("href", "presentation");
+            $("#openSlidesBtn").attr("href", "presentation?name=" + selectedPresentation);
         }
     });
     
@@ -20,4 +23,11 @@ $(document).ready(function() {
         $('#download-reveal-btn').prop('disabled', true);
         $('#download-reveal-btn').addClass("disabled");
     });
+    
+    $("#presentations").change(function() {
+        selectedPresentation = $(this).children("option:selected").val();
+        $("#openSlidesBtn").attr("href", "presentation?name=" + selectedPresentation);
+    });
+
+    
 });
