@@ -5,7 +5,7 @@ $(document).ready(function() {
     $("#pdfCheckbox").change (function() {
         let _href = $("#openSlidesBtn").attr("href");
         if ($(this).is(':checked')) {
-            $("#openSlidesBtn").attr("href", _href + "?print-pdf");
+            $("#openSlidesBtn").attr("href", _href + "&?print-pdf");
         } else {
             $("#openSlidesBtn").attr("href", "presentation?name=" + selectedPresentation);
         }
@@ -24,7 +24,15 @@ $(document).ready(function() {
         $('#download-reveal-btn').addClass("disabled");
     });
     
+    // Save the selected presentation and activate the open slides button
     $("#presentations").change(function() {
+        // Uncheck the open as pdf format checkbox
+        $("#pdfCheckbox").prop('checked', false);
+
+        // Activate open slides button
+        $("#openSlidesBtn").prop('disabled', false);
+        $('#openSlidesBtn').removeClass("disabled");
+
         selectedPresentation = $(this).children("option:selected").val();
         $("#openSlidesBtn").attr("href", "presentation?name=" + selectedPresentation);
     });

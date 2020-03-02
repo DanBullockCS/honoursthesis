@@ -16,9 +16,14 @@ head
     link.type = 'text/css';
     link.href = window.location.search.match( /print-pdf/gi ) ? '/css/print/pdf.css' : '/css/print/paper.css';
     document.getElementsByTagName( 'head' )[0].appendChild( link );
+  script(src='/scripts/reveal.js')
 .reveal
   //- Actual slides code
   div.slides !{fileContent}
+style.
+  section {
+    max-width: 920px;
+  }
 script(src='/scripts/reveal.js')
 script.
   var isPdf = false; // A quick check so that buttons do not show up on pdf friendly version
@@ -26,12 +31,12 @@ script.
   Reveal.initialize({
     hash: true,
     chalkboard: {
-    theme: "whiteboard",
-    src: "yourDrawings.json",
-    readOnly: false, // Lets user go back and edit the drawing after leaving slide
-    toggleNotesButton: !isPdf,
-    toggleChalkboardButton: !isPdf,
-  },
+      theme: "whiteboard",
+      src: "yourDrawings.json",
+      readOnly: false, // Lets user go back and edit the drawing after leaving slide
+      toggleNotesButton: !isPdf,
+      toggleChalkboardButton: !isPdf,
+    },
   dependencies: [
     { src: '/plugin/chalkboard/chalkboard.js' },
     { src: '/plugin/markdown/marked.js' },
@@ -42,12 +47,12 @@ script.
   keyboard: {
     67: function() { RevealChalkboard.toggleNotesCanvas() },// toggle notes canvas when 'c' is pressed
     66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
-    46: function() { RevealChalkboard.clear() },			// clear chalkboard when 'DEL' is pressed
-    8: function() { RevealChalkboard.reset() },			// reset chalkboard data on current slide when 'BACKSPACE' is pressed
-    68: function() { RevealChalkboard.download() },			// download chalkboard drawing when 'd' is pressed
-    88: function() { RevealChalkboard.colorNext() },		// cycle colors forward when 'x' is pressed
-    89: function() { RevealChalkboard.colorPrev() },		// cycle colors backward when 'y' is pressed
-    13: 'next', 											// go to next slide when 'enter' is pressed
-    27: function() { window.close() },						// close slideshow when 'esc' is pressed
+    46: function() { RevealChalkboard.clear() },			      // clear chalkboard when 'DEL' is pressed
+    8: function() { RevealChalkboard.reset() },			        // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+    68: function() { RevealChalkboard.download() },			    // download chalkboard drawing when 'd' is pressed
+    88: function() { RevealChalkboard.colorNext() },		    // cycle colors forward when 'x' is pressed
+    89: function() { RevealChalkboard.colorPrev() },		    // cycle colors backward when 'y' is pressed
+    13: 'next', 											                      // go to next slide when 'enter' is pressed
+    27: function() { window.close() },						          // close slideshow when 'esc' is pressed
     },
   });

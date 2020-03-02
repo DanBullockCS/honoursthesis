@@ -24,7 +24,6 @@ block content
         each slide in presentationNames
           option= slide
     br
-
     
     label(for="uploadBtnGroup") Upload New Slides:
     .btn-group.row.offset-md-1(id="uploadBtnGroup")
@@ -45,7 +44,7 @@ block content
       input(type="checkbox" id="pdfCheckbox")
       span.checkmark
     .btn-group.row.offset-md-1(id="openSlidesGroup")
-      a.btn.btn-primary.text-white(aria-label="Left Align" href="/presentation" id="openSlidesBtn" target="_blank") Open Slides 
+      a.btn.btn-primary.text-white.disabled(aria-label="Left Align" href="/presentation" id="openSlidesBtn" target="_blank") Open Slides 
         i.fas.fa-desktop(aria-hidden="true")
       a.btn.btn-success.text-white(aria-label="Right Align" id="pdf-help" data-toggle="modal" data-target="#help-modal") Exporting slides as PDF 
         i.fa.fa-question-circle(aria-hidden="true")
