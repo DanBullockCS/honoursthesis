@@ -1,8 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var selectedPresentation;
 
     // Changing the url of the button based on checkbox
-    $("#pdfCheckbox").change (function() {
+    $("#pdfCheckbox").change(function () {
         let _href = $("#openSlidesBtn").attr("href");
         if ($(this).is(':checked')) {
             $("#openSlidesBtn").attr("href", _href + "&?print-pdf");
@@ -10,22 +10,28 @@ $(document).ready(function() {
             $("#openSlidesBtn").attr("href", "presentation?name=" + selectedPresentation);
         }
     });
-    
+
     // Remove the disabled property when the file is uploaded
-    $("#uploadBtn").change(function() {
+    $("#uploadBtn").change(function () {
         $('#download-reveal-btn').prop('disabled', false);
         $('#download-reveal-btn').removeClass("disabled");
     });
 
     // After file is uploaded, clear from the input
-    $('#download-reveal-btn').click(function() {
-        $("#uploadBtn").val("");
+    $('#download-reveal-btn').click(function () {
+        let tempFileName = document.getElementById("uploadBtn").files[0].name; 
+        $("#uploadBtn").val(""); // Clear the uploaded slides from the upload button
         $('#download-reveal-btn').prop('disabled', true);
         $('#download-reveal-btn').addClass("disabled");
+
+        // Activate open slides button with the uploaded files name
+        $("#openSlidesBtn").prop('disabled', false);
+        $('#openSlidesBtn').removeClass("disabled");
+        $("#openSlidesBtn").attr("href", "presentation?name=" + tempFileName);
     });
-    
+
     // Save the selected presentation and activate the open slides button
-    $("#presentations").change(function() {
+    $("#presentations").change(function () {
         // Uncheck the open as pdf format checkbox
         $("#pdfCheckbox").prop('checked', false);
 
@@ -37,5 +43,5 @@ $(document).ready(function() {
         $("#openSlidesBtn").attr("href", "presentation?name=" + selectedPresentation);
     });
 
-    
+
 });

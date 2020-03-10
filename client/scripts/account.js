@@ -13,8 +13,8 @@ $(function() {
   
   // Check that a classname was entered
   $(function() {
-    $('#enter-class-name').keyup(function() {
-        if ( this.value) {
+    $('#enter_class_name').keyup(function() {
+        if (this.value) {
             $('#create-class-button').removeAttr("disabled");
         } else {
             $('#create-class-button').prop("disabled", "true");

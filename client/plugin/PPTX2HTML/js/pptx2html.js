@@ -19,7 +19,7 @@ $(document).ready(function() {
 				return function(e) {
 					
 					// Web Worker
-					var worker = new Worker('./PPTX2HTML/js/worker.js');
+					var worker = new Worker('./plugin/PPTX2HTML/js/worker.js');
 				
 					worker.addEventListener('message', function(e) {
 						
@@ -90,7 +90,7 @@ $(document).ready(function() {
 		$("#download-btn").click(function () {
 			if (!isDone) { return; }
 			var cssText = "";
-			$.get("PPTX2HTML/css/pptx2html.css", function (data) {
+			$.get("plugin/PPTX2HTML/css/pptx2html.css", function (data) {
 				cssText = data;
 			}).done(function () {
 				var headHtml = "<style>" + cssText + "</style>";
@@ -104,7 +104,7 @@ $(document).ready(function() {
 		$("#download-reveal-btn").click(function () {
 			if (!isDone) { return; }
 			var cssText = "";
-			$.get("PPTX2HTML/css/pptx2html.css", function (data) {
+			$.get("plugin/PPTX2HTML/css/pptx2html.css", function (data) {
 				cssText = data;
 			}).done(function () {
 				var revealPrefix = 

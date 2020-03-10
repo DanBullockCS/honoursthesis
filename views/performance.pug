@@ -1,0 +1,17 @@
+extends main
+
+block content
+  append head
+    script(language='JavaScript' type='text/javascript' src='/scripts/performance.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js')
+    style(type="text/css").
+      /* Quick inline d3 chart styles */
+      .line { fill: none; stroke: #0077CA; stroke-width: 3; }
+      .overlay { fill: none; pointer-events: all; }
+      .dot { fill: #003C71; stroke: #fff; } 
+  br
+  div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')
+  h1.pagetitle= title
+  br
+  .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+    p Each Student's Performance Chart

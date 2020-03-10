@@ -43,8 +43,7 @@ app.use(session({
    },
    resave: false,
    saveUninitialized: false,
-   // cookie: {secure: true},
-   secret: 'apollo slackware prepositional expectations'
+   secret: 'ssbu discord equator amdradeonr9'
 }));
 
 // Database Schemas
@@ -63,9 +62,15 @@ let userSchema = new Schema({
 
 let courseSchema = new Schema({
    ownerName: String,
-   courseName: String,
+   courseName: {
+      type: String,
+      unique: true,
+      index: true
+   },
    studentList: [],
    dateList: [],
+   gradeCategories: [],
+   grades: [[]],
    attendanceList: [[]],
 }, {
    collection: 'courses'
@@ -275,10 +280,15 @@ app.post('/createClass', function (request, response) {
 
    newCourse.save(function (error) {
       if (error) {
-         response.render('account',
-            { errorMessage: 'Error creating class, name may not be distinctive.' });
+         response.render('account', {
+            errorMessage: "That Class already exists!",
+            title: 'Account Settings',
+            username: username,
+            email: email,
+         });
       } else {
          response.render('account', {
+            errorMessage: "Class Created!",
             title: 'Account Settings',
             username: username,
             email: email,
@@ -350,7 +360,7 @@ app.post('/saveSheet', async function (request, response) {
    for (let i = 0; i < doc.dateList.length; i++) {
       if (doc.dateList[i] == sDate) { index = i; }
    }
-   
+
    // Use that dates index to replace the default attendance in the attendance list
    for (let i = 0; i < sAttendances.aList.length; i++) {
       doc.attendanceList.splice(index, 1, sAttendances.aList);
@@ -378,7 +388,7 @@ app.get('/whiteboard', function (request, response) {
    if (!request.session.username) { response.redirect("/"); }
 
    Presentation.find({ ownerName: username }).then(function (results) {
-      if(results.length === 0) {
+      if (results.length === 0) {
          response.render('whiteboard', {
             title: 'Whiteboard Slides',
             presentationNames: [],
@@ -394,7 +404,7 @@ app.get('/whiteboard', function (request, response) {
          });
       }
    });
-   
+
 });
 
 // Uploading a new slideshow
@@ -409,24 +419,24 @@ app.post('/uploadWhiteboard', async function (request, response) {
       fileContent: slides,
    });
    newPres.save(function (error) {
-          // Loading all the users presentations
-          Presentation.find({ ownerName: username }).then(function (results) {
-            var presentationNames = [];
-            for (i = 0; i < results.length; i++) {
-               presentationNames.push(results[i].fileName);
-            }
-            if (error) {
-               response.json({
-                  errorMessage: 'Could not create presentation, file name already exists in your presentations',
-                  presentationNames: presentationNames,
-               });
-            } else {
-               response.json({
-                  presentationNames: presentationNames,
-               });
-            }
-         });
-   });   
+      // Loading all the users presentations
+      Presentation.find({ ownerName: username }).then(function (results) {
+         var presentationNames = [];
+         for (i = 0; i < results.length; i++) {
+            presentationNames.push(results[i].fileName);
+         }
+         if (error) {
+            response.json({
+               errorMessage: 'Could not create presentation, file name already exists in your presentations',
+               presentationNames: presentationNames,
+            });
+         } else {
+            response.json({
+               presentationNames: presentationNames,
+            });
+         }
+      });
+   });
 });
 
 /***************************************************/
@@ -443,15 +453,29 @@ app.get('/presentation', function (request, response) {
          fileContent: results.fileContent,
       });
    });
-   
+
 });
 
 /************************************************/
 
+/**************** Presentation Page ****************/
+app.get('/performancetracker', function (request, response) {
+   // User not logged in redirect them
+   if (!request.session.username) { response.redirect("/"); }
+
+   response.render('performance', {
+      title: 'Student Performance Tracker',
+   });
+
+});
+/************************************************/
+
+/**************** Logout Page ****************/
 app.get('/logout', function (request, response) {
    request.session.username = '';
    response.redirect('/');
 });
+/************************************************/
 
 // Web listener
 app.set('port', process.env.PORT || 3000);

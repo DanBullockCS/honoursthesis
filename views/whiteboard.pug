@@ -3,15 +3,15 @@ extends main
 block content
   append head
     script(language='JavaScript' type='text/javascript' src='/scripts/whiteboard.js')
-    link(rel='stylesheet' href='/PPTX2HTML/css/font-awesome.min.css')
-    link(rel='stylesheet' href='/PPTX2HTML/css/pptx2html.css')
-    link(rel='stylesheet' href='/PPTX2HTML/css/nv.d3.min.css')
-    script(type='text/javascript' src='/PPTX2HTML/js/pptx2html.js')
-    script(type='text/javascript' src='/PPTX2HTML/js/jquery-1.11.3.min.js')
-    script(type='text/javascript' src='/PPTX2HTML/js/FileSaver.min.js')
-    script(type='text/javascript' src='/PPTX2HTML/js/lz-string.min.js')
-    script(type='text/javascript' src='/PPTX2HTML/js/chart/d3.min.js')
-    script(type='text/javascript' src='/PPTX2HTML/js/chart/nv.d3.min.js')
+    link(rel='stylesheet' href='/plugin/PPTX2HTML/css/font-awesome.min.css')
+    link(rel='stylesheet' href='/plugin/PPTX2HTML/css/pptx2html.css')
+    link(rel='stylesheet' href='/plugin/PPTX2HTML/css/nv.d3.min.css')
+    script(type='text/javascript' src='/plugin/PPTX2HTML/js/pptx2html.js')
+    script(type='text/javascript' src='/plugin/PPTX2HTML/js/jquery-1.11.3.min.js')
+    script(type='text/javascript' src='/plugin/PPTX2HTML/js/FileSaver.min.js')
+    script(type='text/javascript' src='/plugin/PPTX2HTML/js/lz-string.min.js')
+    script(type='text/javascript' src='/plugin/PPTX2HTML/js/chart/d3.min.js')
+    script(type='text/javascript' src='/plugin/PPTX2HTML/js/chart/nv.d3.min.js')
   br
   div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')
   h1.pagetitle= title
@@ -33,7 +33,7 @@ block content
           i.fas.fa-desktop(aria-hidden="true")
         input#uploadBtn.upload(type='file' accept='application/vnd.openxmlformats-officedocument.presentationml.presentation')
       button.btn.btn-success#download-reveal-btn.disabled(type='button' disabled="true")
-        |  Upload Slides 
+        |  Upload 
         i.fas.fa-upload(aria-hidden="true")
     br
     br

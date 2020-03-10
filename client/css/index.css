@@ -12,8 +12,8 @@ br { user-select: none; }
 /* Group maker stage */
 div.stage { background-color: #F5F5F5; }
 
-
 /* Navbar animations */
+nav { user-select: none; }
 a.nav-link:hover:after {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
