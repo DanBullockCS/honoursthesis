@@ -34,14 +34,37 @@ $(document).ready(function () {
     $("#presentations").change(function () {
         // Uncheck the open as pdf format checkbox
         $("#pdfCheckbox").prop('checked', false);
-
+        
         // Activate open slides button
         $("#openSlidesBtn").prop('disabled', false);
         $('#openSlidesBtn').removeClass("disabled");
-
+        
         selectedPresentation = $(this).children("option:selected").val();
         $("#openSlidesBtn").attr("href", "presentation?name=" + selectedPresentation);
+
+        // Toggle delete button
+        if (selectedPresentation) {
+            $("#delete-slides").prop('disabled', false);
+            $('#delete-slides').removeClass("disabled");
+        } else {
+            $("#delete-slides").prop('disabled', true);
+            $('#delete-slides').addClass("disabled");
+        }
+        
     });
-
-
 });
+
+function deleteSlides() {
+    selectedPresentation = $("#presentations").children("option:selected").val();
+    // Remove option tag of slides
+    $("#presentations option:contains(" + selectedPresentation + ")").remove();
+
+    // Send selected presentation to the backend to delete
+    $.ajax({
+        url: "/deleteSlides",
+        method: "POST",
+        data: {
+            selectedPresentation: selectedPresentation,
+        }
+    });
+}

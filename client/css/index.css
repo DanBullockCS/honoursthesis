@@ -6,8 +6,12 @@ h1.pagetitle {
 }
 /* Make sure user cannot select break tags */
 br { user-select: none; }
-.errorMessage { color: red; }
 
+/* Error Message */
+.errorMessage {
+  color: red;
+  display: none;
+}
 
 /* Group maker stage */
 div.stage { background-color: #F5F5F5; }
@@ -129,7 +133,7 @@ a.dropdown-item { color: #fff; }
   transform: rotate(45deg);
 }
 
-/* Error Message */
-.errorMessage {
-  display: none;
+/* Used for small notes on some pages */
+.note {
+  font-size: 0.75rem;
 }

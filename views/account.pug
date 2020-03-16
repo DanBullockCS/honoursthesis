@@ -8,7 +8,7 @@ block content
   br
   if (errorMessage) 
     .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
-      p=errorMessage
+      p.errorMessage(style="display: block;")=errorMessage
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
     h4 Teacher Information:
     p <b>Username:</b> #{username}

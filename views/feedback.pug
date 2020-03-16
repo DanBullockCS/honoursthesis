@@ -1,0 +1,13 @@
+extends main
+
+block content
+  append head
+    script(language='JavaScript' type='text/javascript' src='/scripts/account.js')
+  br
+  h1.pagetitle= title
+  br
+  if (errorMessage) 
+    .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+      p.errorMessage(style="display: block;")=errorMessage
+  .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+    h4 Not started...

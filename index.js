@@ -439,6 +439,16 @@ app.post('/uploadWhiteboard', async function (request, response) {
    });
 });
 
+app.post('/deleteSlides', async function (request, response) {
+   let sPresentation = request.body.selectedPresentation;
+
+   try {
+      const doc = await Presentation.deleteOne({fileName: sPresentation});
+   } catch (err) {
+      console.log(err.stack);
+   }
+});
+
 /***************************************************/
 
 /**************** Presentation Page ****************/
@@ -458,13 +468,25 @@ app.get('/presentation', function (request, response) {
 
 /************************************************/
 
-/**************** Presentation Page ****************/
+/*********** Performance Tracker Page ***********/
 app.get('/performancetracker', function (request, response) {
    // User not logged in redirect them
    if (!request.session.username) { response.redirect("/"); }
 
    response.render('performance', {
       title: 'Student Performance Tracker',
+   });
+
+});
+/************************************************/
+
+/*********** Feedback Mailer Page ***********/
+app.get('/feedback', function (request, response) {
+   // User not logged in redirect them
+   if (!request.session.username) { response.redirect("/"); }
+
+   response.render('feedback', {
+      title: 'Feedback Mailer',
    });
 
 });

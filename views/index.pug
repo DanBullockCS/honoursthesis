@@ -6,5 +6,15 @@ block content
     h6.description= description
     if (!username || (username === ''))
       p You are not logged in
-    else
-      p You are logged in as #{username}.
+    else 
+      // - Display features
+      p You are logged in as <i>#{username}</i>.
+      ul <b>Features:</b>
+        li <a href='/account' title="Account">Account Settings and Login/Register</a>
+        li <a href='/myclasses' title="My Classes">Class Settings</a>
+        li <a href='/groupMaker' title="Group Maker">Group Maker</a>
+        li <a href='/attendance' title="Attendance">Attendance Tracker</a>
+        li <a href='/whiteboard' title="Whiteboard">Whiteboard</a>
+      ul <b>TODO Features:</b>
+        li <a href="performancetracker" title="Student Performance">Student Performance Tracker (D3)</a>
+        li <a href="feedback" title="Feedback Mailer">Feedback Mailer</a>

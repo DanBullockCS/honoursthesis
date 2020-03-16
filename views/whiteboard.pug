@@ -17,6 +17,8 @@ block content
   h1.pagetitle= title
   br
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+    p.note Note: Presentations(pptx) should be uploaded in a 4:3 format
+    p.note To do this in Powerpoint go to the <b>Design Tab > Slide Size > Standard (4:3)</b>.
     label(for="presentations") Select uploaded presentations to view:
     select(class="form-control" id="presentations")
       option.disabled.selected.value(id="disabled-option" style="display: none;") -- select a presentation --
@@ -25,7 +27,7 @@ block content
           option= slide
     br
     
-    label(for="uploadBtnGroup") Upload New Slides:
+    p <b>Upload/Delete Slides:</b>
     .btn-group.row.offset-md-1(id="uploadBtnGroup")
       .fileUpload.btn.btn-primary.ml-1.float-left(id="choosePPTXButton")
         span
@@ -35,9 +37,12 @@ block content
       button.btn.btn-success#download-reveal-btn.disabled(type='button' disabled="true")
         |  Upload 
         i.fas.fa-upload(aria-hidden="true")
+      button.btn.btn-danger.disabled(type='button' id="delete-slides" data-toggle="modal" data-target="#delete-modal" disabled="true")
+        |  Delete 
+        i.fa.fa-trash(aria-hidden="true")
     br
     br
-    label(for="openSlidesGroup") View Slides:
+    p <b>View Slides:</b>
     //- Custom checkbox
     label.checktainer
       p.checktainerLabel Open Slides as PDF-Friendly Version?
@@ -79,4 +84,18 @@ block content
           img.img-fluid(src='/images/exportAsPDF.png' alt='Exporting slides as pdf Instructions' style="max-height:250px;")
         .modal-footer
           button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+
+  //- Delete Modal for selected slides
+  .modal.fade(tabindex='-1' role='dialog' id="delete-modal")
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title Delete Selected Slides?
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+        .modal-body
+          p Are you sure you want to delete these slides?
+        .modal-footer
+          button.btn.btn-danger(type='button' data-dismiss='modal' id="confirm-delete-class-btn" onclick="deleteSlides();") Delete
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
 

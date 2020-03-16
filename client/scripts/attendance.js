@@ -146,25 +146,25 @@ function buildAttendanceSheet() {
     },
     success: (data) => {
       attendanceList = data.attendanceList;
+    
+      // Load in the buttons that are selected
+      let dateIndex = $("select[name='previous-sheets'] option:selected").index() - 1 // -1 because this index starts at 1
+      let numRows = studentList.length;
+      
+      for (i = 0; i < numRows; i++) {
+        if (attendanceList[dateIndex][i] == 0) {
+          $("#pres" + i).removeClass("btn-outline-secondary");
+          $("#pres" + i).addClass("btn-success");
+        } else if (attendanceList[dateIndex][i] == 1) {
+          $("#abse" + i).removeClass("btn-outline-secondary");
+          $("#abse" + i).addClass("btn-danger");
+        } else if (attendanceList[dateIndex][i] == 2) {
+          $("#late" + i).removeClass("btn-outline-secondary");
+          $("#late" + i).addClass("btn-warning");
+        }
+      }
     }
   });
-
-  // Load in the buttons that are selected
-  let dateIndex = $("select[name='previous-sheets'] option:selected").index() - 1 // -1 because this index starts at 1
-  let numRows = studentList.length;
-  
-  for (i = 0; i < numRows; i++) {
-    if (attendanceList[dateIndex][i] == 0) {
-      $("#pres" + i).removeClass("btn-outline-secondary");
-      $("#pres" + i).addClass("btn-success");
-    } else if (attendanceList[dateIndex][i] == 1) {
-      $("#abse" + i).removeClass("btn-outline-secondary");
-      $("#abse" + i).addClass("btn-danger");
-    } else if (attendanceList[dateIndex][i] == 2) {
-      $("#late" + i).removeClass("btn-outline-secondary");
-      $("#late" + i).addClass("btn-warning");
-    }
-  }
   
 }
 
