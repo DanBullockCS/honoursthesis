@@ -70,7 +70,7 @@ let courseSchema = new Schema({
    studentList: [],
    dateList: [],
    gradeCategories: [],
-   grades: [[]],
+   gradesList: [[]],
    attendanceList: [[]],
 }, {
    collection: 'courses'
@@ -473,10 +473,33 @@ app.get('/performancetracker', function (request, response) {
    // User not logged in redirect them
    if (!request.session.username) { response.redirect("/"); }
 
-   response.render('performance', {
-      title: 'Student Performance Tracker',
+   Course.find({ ownerName: request.session.username }).then(function (results) {
+      var courseNames = [];
+      for (i = 0; i < results.length; i++) {
+         courseNames.push(results[i].courseName);
+      }
+
+      response.render('performance', {
+         title: 'Student Performance Tracker',
+         courseNames: courseNames,
+      });
    });
 
+});
+
+app.post('/reloadGradeSheet', function (request, response) {
+   var cName = request.body.courseName;
+   Course.find({ courseName: cName }).then(function (results) {
+      var sList = results[0].studentList;
+      var gList = results[0].gradesList;
+      var catList = results[0].gradeCategories;
+      // Pass lists back to the front end
+      response.json({
+         studentList: sList,
+         gradesList: gList,
+         gradeCategories: catList,
+      });
+   });
 });
 /************************************************/
 
