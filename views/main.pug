@@ -1,8 +1,8 @@
 doctype html
 //- Thesis Project Fall/Winter 2019/2020
-//- Author: Daniel Bullock @DanBullockCS
 head
   meta(charset='utf-8' name='viewport' content='width=device-width, initial-scale=1')
+  meta(name="author" content="Daniel Bullock (@DanBullockCS)")
   title Classroom Companion
   link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous')
   link(rel='stylesheet' type='text/css' href='/css/index.css')
@@ -43,15 +43,9 @@ header.sticky-top
             a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Tracker Widgets")
               | Tracker Widgets
             .dropdown-menu.dropdown-menu--animate
-              a.dropdown-item(href='#' title="Material Planner") Material Planner
               a.dropdown-item(href='/attendance' title="Attendance") Attendance
-              a.dropdown-item(href='/performancetracker' title="Student Performance") Student Performance
-          li.nav-item.dropdown
-            a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' title="Feedback Widgets")
-              | Feedback Widgets
-            .dropdown-menu.dropdown-menu--animate
-              a.dropdown-item(href='#' title="Feedback Mailer") Feedback Mailer
-              a.dropdown-item(href='#' title="Anonymous Feedback") Anonymous Feedback
+              a.dropdown-item(href='/grades' title="Grade Tracker") Grade Tracker
+              a.dropdown-item(href='/performance' title="Student Performance Tracker") Student Performance
           li.nav-item
             a.nav-link(href="/logout" title="Logout") Logout
         else

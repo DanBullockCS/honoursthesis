@@ -1,0 +1,90 @@
+extends main
+
+block content
+  append head
+    script(language='JavaScript' type='text/javascript' src='/scripts/grades.js')
+    script(src="/scripts/plugins/arrow-table.js")
+  br
+  div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')
+  h1.pagetitle= title
+  br
+  .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+    p Create a class on the <a href="/account#CreateClass">settings page</a>.
+    p See entered grade statistics on the <a href="/performance">student performance tracker page</a>.
+    .card.shadow
+      #heading1.card-header
+          button.btn.btn-link(data-toggle='collapse' data-target='#collapse' aria-expanded='true' aria-controls='collapse')
+            | How to use the Grade Sheet 
+            i.fa.fa-question-circle(aria-hidden="true")
+      #collapse.collapse(aria-labelledby='heading1' data-parent='#accordion')
+        .card-body
+          p.note You can navigate the grade table with the arrows keys and click on the <b>Grade Column</b> buttons to add/delete grade columns. When you are done marking that class click on the <b>Save Sheet</b> button you can also clear all the marks on the sheet with the <b>Clear Sheet</b> button.
+          p.note Grade cells will highlight in red if you try to save without filling out the entire sheet, (if there is no grade yet, just enter a placeholder)!
+          p.note If you hit the <b>Clear Sheet</b> button by accident, do not fret! If you have previously saved your grades, just refresh the page (Those marks are stil saved on our end).
+    br
+    label(for="users-classes") Select a Class:
+    select(class="form-control" id="users-classes")
+      option.disabled.selected.value(id="disabled-option-class" style="display: none;") -- select a class --
+      if (courseNames)
+        each course in courseNames
+          option= course
+  //- Grades Sheet
+  div(id="grades-sheet" style="display: none;")
+    div.stage.shadow
+      table.table.table-dark(id="grades-table")
+        thead.thead-dark
+          tr.isHeader
+            th Grade Sheet for:
+            th(id="sheetsClassName")
+            th
+              button.btn.btn-success.text-white(data-toggle="modal" data-target="#add-column-modal" id="show-add-column-modal") Grade Column 
+                i.fa.fa-plus(aria-hidden="true")
+            th
+              button.btn.btn-danger.text-white(data-toggle="modal" data-target="#del-column-modal" id="show-del-column-modal") Grade Column 
+                i.fa.fa-minus(aria-hidden="true")
+            th
+              button.btn.btn-success.text-white(id="save-grade-col-btn" data-toggle="modal" data-target="#saved-modal" onclick="saveSheet();") Save Sheet 
+                i.fa.fa-save(aria-hidden="true")
+            th
+              button.btn.btn-danger.text-white(id="clear-sheet-btn" onclick="clearSheet();") Clear Sheet 
+                i.fas.fa-eraser(aria-hidden="true")
+        tbody(id="sheet-body")
+  br
+  br
+
+  //- Add grade column modal
+  .modal.fade(tabindex='-1' role='dialog' id="add-column-modal")
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title Enter Grade Column Name:
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+        .modal-body
+          input.form-control(type="text" id="newGradeColumnName")
+        .modal-footer
+          button.btn.btn-success.text-white(id="add-grade-col-btn" type='button' data-dismiss='modal') Add Column
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+
+  //- Delete grade column modal
+  .modal.fade(tabindex='-2' role='dialog' id="del-column-modal")
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title Delete the right-most grade column?
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+        .modal-footer
+          button.btn.btn-danger.text-white(id="del-grade-col-btn" type='button' data-dismiss='modal') Delete Column
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+
+  //- Saved Sheet Modal
+  .modal.fade(tabindex='-3' role='dialog' id="saved-modal")
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title(id="saved-sheet-message")
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Close

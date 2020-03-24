@@ -69,8 +69,7 @@ let courseSchema = new Schema({
    },
    studentList: [],
    dateList: [],
-   gradeCategories: [],
-   gradesList: [[]],
+   gradesList: [],
    attendanceList: [[]],
 }, {
    collection: 'courses'
@@ -468,8 +467,54 @@ app.get('/presentation', function (request, response) {
 
 /************************************************/
 
+/*********** Grades Page ***********/
+app.get('/grades', function (request, response) {
+   // User not logged in redirect them
+   if (!request.session.username) { response.redirect("/"); }
+
+   Course.find({ ownerName: request.session.username }).then(function (results) {
+      var courseNames = [];
+      for (i = 0; i < results.length; i++) {
+         courseNames.push(results[i].courseName);
+      }
+
+      response.render('grades', {
+         title: 'Grade Tracker',
+         courseNames: courseNames,
+      });
+   });
+
+});
+
+app.post('/reloadGradeSheet', function (request, response) {
+   var cName = request.body.courseName;
+   Course.find({ courseName: cName }).then(function (results) {
+      var sList = results[0].studentList;
+      var gList = results[0].gradesList;
+      // Pass lists back to the front end
+      response.json({
+         studentList: sList,
+         gradesList: gList,
+      });
+   });
+});
+
+app.post('/saveGradeSheet', async function (request, response) {
+   let sClass = request.body.courseName;
+   let sGrades = JSON.parse(request.body.studentGrades);
+
+   try {
+      const doc = await Course.findOne({ courseName: sClass });
+      doc.gradesList = sGrades.gradesList;
+      await doc.save();
+   } catch (err) {
+      console.log(err.stack);
+   }
+});
+/************************************************/
+
 /*********** Performance Tracker Page ***********/
-app.get('/performancetracker', function (request, response) {
+app.get('/performance', function (request, response) {
    // User not logged in redirect them
    if (!request.session.username) { response.redirect("/"); }
 
@@ -487,23 +532,10 @@ app.get('/performancetracker', function (request, response) {
 
 });
 
-app.post('/reloadGradeSheet', function (request, response) {
-   var cName = request.body.courseName;
-   Course.find({ courseName: cName }).then(function (results) {
-      var sList = results[0].studentList;
-      var gList = results[0].gradesList;
-      var catList = results[0].gradeCategories;
-      // Pass lists back to the front end
-      response.json({
-         studentList: sList,
-         gradesList: gList,
-         gradeCategories: catList,
-      });
-   });
-});
 /************************************************/
 
 /*********** Feedback Mailer Page ***********/
+// This was never finished and may be completed in the future
 app.get('/feedback', function (request, response) {
    // User not logged in redirect them
    if (!request.session.username) { response.redirect("/"); }

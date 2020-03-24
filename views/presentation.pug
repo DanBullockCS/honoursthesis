@@ -16,7 +16,7 @@ head
     link.type = 'text/css';
     link.href = window.location.search.match( /print-pdf/gi ) ? '/css/print/pdf.css' : '/css/print/paper.css';
     document.getElementsByTagName( 'head' )[0].appendChild( link );
-  script(src='/scripts/reveal.js')
+  script(src='/scripts/plugins/reveal.js')
 .reveal
   //- Actual slides code
   div.slides !{fileContent}

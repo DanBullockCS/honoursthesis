@@ -14,27 +14,12 @@ block content
   h1.pagetitle= title
   br
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
-      p Create a class on the <a href="/account#CreateClass">settings page</a>.
-      label(for="users-classes") Select a Class:
-      select(class="form-control" id="users-classes")
-        option.disabled.selected.value(id="disabled-option-class" style="display: none;") -- select a class --
-        if (courseNames)
-          each course in courseNames
-            option= course
-  //- Grades Sheet
-  div(id="grades-sheet" style="display: none;")
-      div.stage.shadow
-        table.table(id="grades-table")
-          thead.thead-dark
-            tr
-              th Grade Sheet for:
-              th(id="sheetsClassName")
-              th
-                button.btn.btn-success.text-white.float-right(aria-label="Right Align" id="save-grade-col-btn") Save Sheet 
-                  i.fa.fa-save(aria-hidden="true")
-              th
-                button.btn.btn-success.text-white.float-right(aria-label="Right Align" id="add-grade-col-btn") Add Grade Column 
-                  i.fa.fa-plus(aria-hidden="true")
-          tbody(id="sheet-body")
-  br
-  br
+    p Create a class on the <a href="/account#CreateClass">settings page</a>.
+    p Enter grades on the <a href="/grades">grade tracker page so charts will be created</a>.
+    label(for="users-classes") Select a Class:
+    select(class="form-control" id="users-classes")
+      option.disabled.selected.value(id="disabled-option-class" style="display: none;") -- select a class --
+      if (courseNames)
+        each course in courseNames
+          option= course
+  

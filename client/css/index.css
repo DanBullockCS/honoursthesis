@@ -137,3 +137,16 @@ a.dropdown-item { color: #fff; }
 .note {
   font-size: 0.75rem;
 }
+
+/* Grade Table */
+#grades-table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+#grades-sheet td {
+  min-width: 10rem;
+}
+#grades-sheet th {
+  min-width: 13rem;
+}
