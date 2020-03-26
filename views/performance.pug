@@ -3,23 +3,43 @@ extends main
 block content
   append head
     script(language='JavaScript' type='text/javascript' src='/scripts/performance.js')
+    script(language='JavaScript' type='text/javascript' src='/scripts/plugins/saveSvgAsPng.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js')
     style(type="text/css").
       /* Quick inline d3 chart styles */
       .line { fill: none; stroke: #0077CA; stroke-width: 3; }
       .overlay { fill: none; pointer-events: all; }
-      .dot { fill: #003C71; stroke: #fff; } 
+      .dotStudent { fill: #0077CA; stroke: #fff; }
+      .dotClass { fill: #E75D2A; stroke: #fff; }
+      .legend rect {
+        fill:white;
+        stroke:black;
+        opacity:0.8;
+      }
   br
   div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')
   h1.pagetitle= title
   br
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
     p Create a class on the <a href="/account#CreateClass">settings page</a>.
-    p Enter grades on the <a href="/grades">grade tracker page so charts will be created</a>.
+    p Enter grades on the <a href="/grades">grade tracker page</a> to generate charts.
     label(for="users-classes") Select a Class:
     select(class="form-control" id="users-classes")
       option.disabled.selected.value(id="disabled-option-class" style="display: none;") -- select a class --
       if (courseNames)
         each course in courseNames
           option= course
-  
+    br
+    div(id="students-select-div" style="display: none;")
+      label(for="students-select") Select a Student's Average Grade Chart:
+      select(class="form-control" id="students-select")
+      br
+      label.checktainer
+        p.checktainerLabel Show Class Average In Chart?
+        input(type="checkbox" id="classAvgCheckbox")
+        div(id="txtClassAvg" style="display: none;")
+        span.checkmark
+      button.btn.btn-success.text-white(id="download-chart") Download Chart  
+        i.fa.fa-download(aria-hidden="true")
+  div
+    svg(id="chart")

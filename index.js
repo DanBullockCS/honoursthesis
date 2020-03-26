@@ -532,6 +532,19 @@ app.get('/performance', function (request, response) {
 
 });
 
+app.post('/reloadPerformance', function (request, response) {
+   var cName = request.body.courseName;
+   Course.find({ courseName: cName }).then(function (results) {
+      var sList = results[0].studentList;
+      var gList = results[0].gradesList;
+      // Pass lists back to the front end
+      response.json({
+         studentList: sList,
+         gradesList: gList,
+      });
+   });
+});
+
 /************************************************/
 
 /*********** Feedback Mailer Page ***********/

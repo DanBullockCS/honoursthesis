@@ -114,8 +114,7 @@ function buildGradeSheet() {
 
 // Save the sheet to the backend
 function saveSheet() {
-    // Make sure the user has clicked a button for each student
-    $("#saved-sheet-message").html("Grade sheet has been saved");
+    $("#saved-sheet-message").html("Missing grades! Enter in a placeholder if there is not grade yet!");
 
     // Get Header names (Grade types)
     var gradesList = [[]];
@@ -161,6 +160,9 @@ function saveSheet() {
     }
     // If there are no empty mark cells in the sheet, send to backend
     if (isSheetComplete) {
+        // Make sure the user has clicked a button for each student
+        $("#saved-sheet-message").html("Grade sheet has been saved");
+
         // Cannot send list over without stringifying it
         var jsonText = JSON.stringify({ gradesList });
 
