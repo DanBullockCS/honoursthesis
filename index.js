@@ -96,7 +96,7 @@ app.get('/', function (request, response) {
    username = request.session.username;
    response.render('index', {
       title: 'Home',
-      description: 'Welcome to Classroom Companion! The website is currently under construction.',
+      description: 'Welcome to Classroom Companion! Check out your different teacher tools below.',
       username: username
    });
 });

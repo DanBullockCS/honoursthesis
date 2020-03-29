@@ -1,19 +1,33 @@
 extends main
 block content
+  append head
+    link(rel="stylesheet" type='text/css' href='/css/home.css')
   br
   h1.pagetitle= title
+  br
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
     h6.description= description
     if (!username || (username === ''))
-      p You are not logged in
+      p <a href="/register">Register</a> or <a href="/login">Login</a> to teach simplier.
     else 
       // - Display features
       p You are logged in as <i>#{username}</i>.
-      ul <b>Features:</b>
-        li <a href='/account' title="Account">Account Settings and Login/Register</a>
-        li <a href='/myclasses' title="My Classes">Class Settings</a>
-        li <a href='/groupMaker' title="Group Maker">Group Maker</a>
-        li <a href='/attendance' title="Attendance">Attendance Tracker</a>
-        li <a href='/whiteboard' title="Whiteboard">Whiteboard</a>
-        li <a href='/grades' title="Grade Tracker">Grade Tracker</a>
-        li <a href="/performance" title="Student Performance Tracker">Student Performance Tracker (D3)</a>
+      .row
+        .col-lg-4
+          a(href="/myclasses")
+            img.zoomer.img-fluid(src='/images/home/MyClasses.png' alt='My Classes')
+        .col-lg-4
+          a(href="/groupMaker")
+            img.zoomer.img-fluid(src='/images/home/groupmaker.png' alt='Group Maker')
+        .col-lg-4
+          a(href="/attendance")
+            img.zoomer.img-fluid(src='/images/home/attendance.png' alt='Attendance')
+        .col-lg-4
+          a(href="/whiteboard")
+            img.zoomer.img-fluid(src='/images/home/whiteboard.png' alt='Whiteboard')
+        .col-lg-4
+          a(href="/grades")
+            img.zoomer.img-fluid(src='/images/home/gradetracker.png' alt='Grade Tracker')
+        .col-lg-4
+          a(href="/performance")
+            img.zoomer.img-fluid(src='/images/home/performancetracker.png' alt='Performance Tracker')
