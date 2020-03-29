@@ -5,7 +5,7 @@ append head
       script(language='JavaScript' type='text/javascript' src='/scripts/register.js')
       br
       if (errorMessage)
-            div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')= errorMessage
+            div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(style="color: red;")= errorMessage
       h1.pagetitle= title
       br
       .container.col-md-4.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
@@ -29,6 +29,7 @@ append head
                               id='pwd',
                               name='pwd'
                               onkeyup='check();')
+                        br
                         label(for='confirm_pwd') Confirm Password:
                         input.form-control(type='password',
                               id='confirm_pwd',

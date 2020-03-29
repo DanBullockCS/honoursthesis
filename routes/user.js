@@ -94,8 +94,10 @@ router.post('/processRegistration', function (request, response) {
 
    newUser.save(function (error) {
       if (error) {
-         response.render('register',
-            { errorMessage: 'Invalid registration data' });
+         response.render('register', {
+            errorMessage: 'Username or Email already in use.',
+            title: "Register",
+         });
       } else {
          request.session.username = username; // Logged in
          response.render('registerConfirm', {

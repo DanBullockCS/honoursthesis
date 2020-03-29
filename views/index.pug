@@ -9,6 +9,8 @@ block content
     h6.description= description
     if (!username || (username === ''))
       p <a href="/register">Register</a> or <a href="/login">Login</a> to teach simplier.
+      a(href="/")
+        img.zoomer.img-fluid.mx-auto.d-block(src='/images/Logo.png' alt='Home Page' style="width: 10rem;")
     else 
       // - Display features
       p You are logged in as <i>#{username}</i>.

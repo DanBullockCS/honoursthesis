@@ -1,4 +1,12 @@
 extends main
 block content
-   h1= title
-   p Hi #{username}, you have signed up on ClassroomCompanion.
+   if (errorMessage)
+      div.container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded(class='errorMessage')= errorMessage
+   else
+      h1.pagetitle= title
+         br
+      .container.col-md-4.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
+         p Hey <i>#{username}</i>, thank you for signing up on ClassroomCompanion! We will redirect you to the homepage in 5 seconds.
+         // - Redirect to the home page after they've seen they have registered
+         script. 
+            setTimeout(function(){ window.location.href = '/'; }, 5000);

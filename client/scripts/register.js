@@ -21,19 +21,20 @@ function validateEmail(input) {
   }
 }
 
+// Do this in the backend, rather than passing a list of all the usernames in the database to the frontend.
 // Check that the username doesn't exist in the Database
-function validateUsername(input) {
-  let usernames = [];
-  // This does not actually check the db
-  for (let i = 0; i < usernames.length; i++) {
-     if (usernames[i] === input.value) {
-        document.register_form.username.classList.add("is-invalid");
-        document.getElementById('username_valid').innerText = "Username already exists";
-     }
-  }
-  document.register_form.username.classList.remove("is-invalid");
-  document.getElementById('username_valid').innerText = "";
-}
+// function validateUsername(input) {
+//   let usernames = [];
+//   // This does not actually check the db
+//   for (let i = 0; i < usernames.length; i++) {
+//      if (usernames[i] === input.value) {
+//         document.register_form.username.classList.add("is-invalid");
+//         document.getElementById('username_valid').innerText = "Username already exists";
+//      }
+//   }
+//   document.register_form.username.classList.remove("is-invalid");
+//   document.getElementById('username_valid').innerText = "";
+// }
 
 // Making sure something was entered for each field
 document.addEventListener("keyup", function() {
