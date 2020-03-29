@@ -1,9 +1,0 @@
-extends main
-block content
-   h1.pagetitle= title
-   br
-   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
-      p Logged in as <i>#{username}</i>.
-   // - Redirect to the home page after they've seen they have logged in
-   script. 
-      setTimeout(function(){ window.location.href = '/'; }, 3000);

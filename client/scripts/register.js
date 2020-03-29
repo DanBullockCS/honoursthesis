@@ -24,14 +24,7 @@ function validateEmail(input) {
 // Check that the username doesn't exist in the Database
 function validateUsername(input) {
   let usernames = [];
-
-
-  
-  // TODO
   // This does not actually check the db
-
-
-
   for (let i = 0; i < usernames.length; i++) {
      if (usernames[i] === input.value) {
         document.register_form.username.classList.add("is-invalid");
