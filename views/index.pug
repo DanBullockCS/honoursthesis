@@ -8,9 +8,14 @@ block content
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
     h6.description= description
     if (!username || (username === ''))
-      p <a href="/register">Register</a> or <a href="/login">Login</a> to teach simplier.
-      a(href="/")
-        img.zoomer.img-fluid.mx-auto.d-block(src='/images/Logo.png' alt='Home Page' style="width: 10rem;")
+      p Start Teaching Simpler.
+      .row
+        .col
+          a(href="/register")
+            img.zoomer.img-fluid.d-block.float-right(src='/images/home/Register.png' alt='Register' style="max-width: 75%;")
+        .col
+          a(href="/login")
+            img.zoomer.img-fluid.d-block.float-left(src='/images/home/Login.png' alt='Login' style="max-width: 75%;")
     else 
       // - Display features
       p You are logged in as <i>#{username}</i>.

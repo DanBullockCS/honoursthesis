@@ -17,8 +17,27 @@ block content
   h1.pagetitle= title
   br
   .container.col-md-6.col-md-offset-4.shadow.p-3.mb-5.bg-white.rounded
-    p.note Note: Presentations(pptx) should be uploaded in a 4:3 format
-    p.note To do this in Powerpoint go to the <b>Design Tab > Slide Size > Standard (4:3)</b>.
+    .card.shadow
+      #heading1.card-header
+          button.btn.btn-link(data-toggle='collapse' data-target='#collapse' aria-expanded='true' aria-controls='collapse')
+            | How to use the Whiteboard Slides
+            i.fa.fa-question-circle(aria-hidden="true")
+      #collapse.collapse(aria-labelledby='heading1' data-parent='#accordion')
+        .card-body
+          p.note Select a presentation and click <b>Open Slides</b>.
+          p.note Note: Presentations(pptx) should be uploaded in a 4:3 format
+          p.note To do this in Powerpoint go to the <b>Design Tab > Slide Size > Standard (4:3)</b>.
+          p.note Here are the keybinds for the whiteboard slides (there are also onscreen buttons):
+          hr
+          p.note <b>C</b> - Toggle Notes
+          p.note <b>B</b> - Toggle Chalkboard
+          p.note <b>DEL</b> - Clear Chalkboard
+          p.note <b>BACKSPACE</b> - Reset Chalkboard on Current Slide
+          p.note <b>D</b> - Download Chalkboard
+          p.note <b>X/Y</b> - Cycle between colours on the chalkboard
+          p.note <b>Left Click</b> - Drawing
+          p.note <b>Right Click</b> - Erasing
+    br
     label(for="presentations") Select uploaded presentations to view:
     select(class="form-control" id="presentations")
       option.disabled.selected.value(id="disabled-option" style="display: none;") -- select a presentation --
