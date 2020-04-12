@@ -66,7 +66,6 @@ $(document).ready(function () {
         saveSvgAsPng(document.getElementsByTagName("svg")[0], fileName, { backgroundColor: "#FFFFFF" });
     });
 
-
     // Checkbox code checked code
     $('#classAvgCheckbox').click(function () {
         $("#txtClassAvg").toggleClass("checked");
@@ -81,14 +80,12 @@ $(document).ready(function () {
     });
 });
 
-
-
 // D3 Code
 function plot() {
     var margin = { top: 100, right: 100, bottom: 100, left: 100 }
-        , width = window.innerWidth - margin.left - margin.right    // Use the window's width 
-        , height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
-    var offset = 50;
+        , width = window.innerWidth/2 - margin.left - margin.right    // Use the window's width 
+        , height = window.innerHeight/2 - margin.top - margin.bottom; // Use the window's height
+    var offset = 25;
 
     // Data preparation
     data = [];
@@ -119,7 +116,7 @@ function plot() {
 
     // Define the lines
     var valueline = d3.line()
-        .x(function (d) { return xScale(d.GradeColumns) + margin.top + offset; })
+        .x(function (d) { return xScale(d.GradeColumns) + margin.top/2 + 20 })
         .y(function (d) { return yScale(d.studentGrades); })
         .curve(d3.curveMonotoneX);   // Line smoothing
     
@@ -141,14 +138,28 @@ function plot() {
         .data(data)
         .enter().append("circle") // Uses the enter().append() method
         .attr("class", "dotStudent") // Assign a class for styling
-        .attr("cx", function (d) { return xScale(d.GradeColumns) + margin.top + offset; })
+        .attr("cx", function (d) { return xScale(d.GradeColumns) + margin.top/2 + 20; })
         .attr("cy", function (d) { return yScale(d.studentGrades); })
         .attr("r", 5);
+
+    // Add X axis label:
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", width)
+        .attr("y", height + offset*2)
+        .text("Grade Type");
+    // Y axis label:
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -margin.left + offset)
+        .attr("x", -margin.top + 100)
+        .text("Percentage Grade");
 
     // If checkbox to show class average
     if (showClassAvgs) {
         var valueline2 = d3.line()
-            .x(function (d) { return xScale(d.GradeColumns) + margin.top + offset; })
+            .x(function (d) { return xScale(d.GradeColumns) + margin.top/2 + 20; })
             .y(function (d) { return yScale(d.ClassAverage); })
             .curve(d3.curveMonotoneX);
 
@@ -163,7 +174,7 @@ function plot() {
             .data(data)
             .enter().append("circle") // Uses the enter().append() method
             .attr("class", "dotClass") // Assign a class for styling
-            .attr("cx", function (d) { return xScale(d.GradeColumns) + margin.top + offset; })
+            .attr("cx", function (d) { return xScale(d.GradeColumns) + margin.top/2 + 20; })
             .attr("cy", function (d) { return yScale(d.ClassAverage); })
             .attr("r", 5);
     }
