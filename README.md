@@ -2,6 +2,13 @@
 **Title:** ClassroomCompanion\
 **Desc:** A website built to assist teachers with mundane teaching tasks.
 
+## How To Run
+Using Node js run:
+```
+node index.js
+```
+With MongoDB installed and running.
+
 ## Features:
 - Group Maker - takes in student names and max group size to randomly make groups
 - Attendance tracker - Keeps track of student attendance

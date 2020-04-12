@@ -57,6 +57,7 @@ $(document).ready(function () {
         }
 
         plot();
+        $([document.documentElement, document.body]).animate({ scrollTop: $("#chart").offset().top }, 750);
     });
 
     // saveSvgAsPng plugin from https://github.com/exupero/saveSvgAsPng
