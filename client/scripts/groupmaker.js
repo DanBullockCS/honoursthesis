@@ -1,3 +1,5 @@
+// Client side js for GroupMaker page
+
 // Make sure number inputs are numbers
 var number = document.getElementsByClassName('number-input');
 number.onkeydown = function(e) {

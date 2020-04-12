@@ -1,3 +1,4 @@
+// The Account settings client side javascript
 // Hiding and showing pastebox or upload file input
 $(function() {
     $('#paste-or-excel').change(function(){

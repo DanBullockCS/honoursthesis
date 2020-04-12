@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/DanBullockCS/honoursthesis/issues"
   },
-  "homepage": "https://github.com/DanBullockCS/honoursthesis#readme",
+  "homepage": "https://github.com/DanBullockCS/honoursthesis",
   "dependencies": {
     "bcrypt": "^3.0.6",
     "bcrypt-nodejs": "0.0.3",

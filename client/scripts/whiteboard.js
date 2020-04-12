@@ -1,3 +1,4 @@
+// Client side js for whiteboard page
 $(document).ready(function () {
     var selectedPresentation;
 

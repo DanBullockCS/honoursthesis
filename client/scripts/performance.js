@@ -1,3 +1,4 @@
+// Client side js for student performance page
 var selectedClass, gradesAsNums, headerNames, studentList, selectedStudentsGrades, classAvgs;
 var showClassAvgs = false;
 

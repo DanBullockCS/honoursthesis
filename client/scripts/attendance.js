@@ -1,3 +1,4 @@
+// Client side js for attendance page
 var selectedClass, selectedSheet, studentList, attendanceList, tbody;
 
 $(document).ready(function () {

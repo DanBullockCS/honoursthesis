@@ -1,3 +1,4 @@
+// Client side js for grades page
 var tbody, studentList, gradesList, selectedClass;
 
 $(document).ready(function () {

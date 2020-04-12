@@ -1,3 +1,5 @@
+// Client side js for register page
+
 // Check if password matches confirm password in register
 var check = function() {
   if(document.getElementById('pwd').value == document.getElementById('confirm_pwd').value) {

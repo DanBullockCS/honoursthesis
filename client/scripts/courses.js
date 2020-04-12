@@ -1,3 +1,4 @@
+// Client side js for my classes page
 var selectedClass;
 
 // Load student List
