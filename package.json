@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/DanBullockCS/honoursthesis",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "bcrypt-nodejs": "0.0.3",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
